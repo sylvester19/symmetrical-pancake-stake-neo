@@ -18,7 +18,7 @@ import {BsFacebook} from 'react-icons/bs'
 import {AiFillTwitterCircle} from 'react-icons/ai'
 import {BsTelegram} from 'react-icons/bs'
 import {FaMedium} from 'react-icons/fa'
-
+import { useNavigate, Link } from '@reach/router';
 
 const Staking = () => {  
 
@@ -351,14 +351,15 @@ const [active, setActive] = useState("-1");
             </a>
           </li>
           <li>
+          <Link to={`/earn`}>
             <a
               className={active === "0" ? "actived" : ""}
-              href="/earn"
+              href="#"
               id={"0"}
-              onClick={handleClick}
             >
               Earn
             </a>
+            </Link>
           </li>
           <li>
             <a

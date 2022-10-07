@@ -57,6 +57,7 @@ function App() {
         theme={darkTheme({ borderRadius: "medium" })}
       >
         <Staking />
+        <Base />
       </RainbowKitProvider>
     </WagmiConfig>
   );

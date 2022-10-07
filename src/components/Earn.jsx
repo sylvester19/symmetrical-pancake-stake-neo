@@ -430,7 +430,8 @@ const [active, setActive] = useState("-1");
             <div className="container">
               <div className="earn-left card earn">
                 <div className="heading-earn">
-                <h2 class="text-center"><img src={cho} alt="img" /> CHO</h2>
+                {/* <img src={cho} alt="img" />  */}
+                <h2 class="text-center">CHO</h2>
                 </div>
                 <div class="earn-border">
                   <hr></hr>
