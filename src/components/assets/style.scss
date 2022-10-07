@@ -1,0 +1,114 @@
+.earn-buttons {
+    width: 200px;
+    background: linear-gradient(90.41deg, #4FA7F3 0.31%, #7CF0B2 99.66%);
+    border-radius: 9px;
+}
+
+.earn-btn {
+    margin-left: 80px;
+    padding-bottom: 10px;
+}
+
+.info-text {
+    padding-left: 20px;
+    font-size: 15px;
+    padding-left: 157px;
+    margin-top: 10px;
+}
+
+.highlight {
+    h2 {
+        font-weight: 800;
+        color: #99F3FF;
+    }
+
+}
+
+.placeholder {
+    height: 30px;
+    width: 30px;
+    float: right;
+    background: linear-gradient(67.44deg, #F0EF59 10.54%, #8FEB99 85.33%);
+    border-radius: 50px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.floating-card {
+    position: relative;
+    font-size: .8rem;
+    position: absolute;
+    right: 100px;
+    top: 148px;
+    width: 150px;
+    background: linear-gradient(90deg, #4EA5F4 0%, #7CF0B1 100%);
+    padding: 10px 10px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    z-index: 1;
+    color: white;
+    text-align: center;
+}
+
+.floating-card-two {
+    position: relative;
+    font-size: .8rem;
+    position: absolute;
+    right: 600px;
+    top: 148px;
+    width: 150px;
+    background: linear-gradient(90deg, #4EA5F4 0%, #7CF0B1 100%);
+    padding: 10px 10px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    z-index: 1;
+    color: white;
+    text-align: center;
+}
+
+.floating-card-three {
+    position: relative;
+    font-size: .8rem;
+    position: absolute;
+    left: 250px;
+    top: 148px;
+    width: 150px;
+    background: linear-gradient(90deg, #4EA5F4 0%, #7CF0B1 100%);
+    padding: 10px 10px;
+    border-radius: 100px;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    z-index: 1;
+    color: white;
+    text-align: center;
+}
+
+@media screen and (min-width: 1900px) {
+    .earn-btn {
+        margin-left: 120px;
+    }
+
+    .info-text {
+        padding-left: 180px;
+    }
+
+    .floating-card-two {
+        right: 750px !important;
+    }
+
+    .floating-card-three {
+        left: 380px;
+    }
+}

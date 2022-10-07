@@ -317,8 +317,18 @@ const Earn = () => {
 
         <div className="container">
           <div className="earn-left card earn">
+            <div className="floating-card">
+              <h1>Promo</h1>
+            </div>
             <div className="heading-earn">
-              <h2 class="text-center">CHO</h2>
+              <div className="row">
+                <div className="column" style={{ width: '150px' }}>
+                  <div class="placeholder"></div>
+                </div>
+                <div className="column" style={{ width: '200px' }}>
+                  <h2>CHO</h2>
+                </div>
+              </div>
             </div>
             <div class="earn-border">
               <hr></hr>
@@ -349,24 +359,34 @@ const Earn = () => {
               <div class="left-earn-division">
                 <h2>Apr</h2>
               </div>
-              <div class="right-earn-division">
+              <div class="right-earn-division highlight">
                 <h2>26%</h2>
               </div>
             </div>
 
             <div className="user-input">
-              <div className="btn earn-btn">
-                <button className="btn_primary" onClick={stakeTokens}>Deposit</button>
+              <div className="earn-btn">
+                <button className="btn_primary earn-buttons" onClick={stakeTokens}>Deposit</button>
               </div>
-              <div className="btn earn-btn">
+              <div className="info-text">
                 <a href="/#" onClick={stakeTokens}>More Info</a>
               </div>
             </div>
-
           </div>
+
           <div className="earn-left card earn">
+            <div className="floating-card-two">
+              <h1>Promo</h1>
+            </div>
             <div className="heading-earn">
-              <h2 class="text-center">USDT / USDC</h2>
+              <div className="row">
+                <div className="column" style={{ width: '86px' }}>
+                  <div class="placeholder"></div>
+                </div>
+                <div className="column" style={{ width: '290px' }}>
+                  <h2>USDT / USDC</h2>
+                </div>
+              </div>
             </div>
             <div class="earn-border">
               <hr></hr>
@@ -397,24 +417,34 @@ const Earn = () => {
               <div class="left-earn-division">
                 <h2>Apr</h2>
               </div>
-              <div class="right-earn-division">
+              <div class="right-earn-division highlight">
                 <h2>16%</h2>
               </div>
             </div>
 
             <div className="user-input">
-              <div className="btn earn-btn">
-                <button className="btn_primary" onClick={stakeTokens}>Deposit</button>
+              <div className="earn-btn">
+                <button className="btn_primary earn-buttons" onClick={stakeTokens}>Deposit</button>
               </div>
-              <div className="btn earn-btn">
+              <div className="info-text">
                 <a href="/#" onClick={stakeTokens}>More Info</a>
               </div>
             </div>
 
           </div>
           <div className="earn-left card earn">
+            <div className="floating-card-three">
+              <h1>Promo</h1>
+            </div>
             <div className="heading-earn">
-              <h2 class="text-center">Curve IbEUR</h2>
+              <div className="row">
+                <div className="column" style={{ width: '86px' }}>
+                  <div class="placeholder"></div>
+                </div>
+                <div className="column" style={{ width: '290px' }}>
+                  <h2>Curve IbEUR</h2>
+                </div>
+              </div>
             </div>
             <div class="earn-border">
               <hr></hr>
@@ -446,16 +476,16 @@ const Earn = () => {
               <div class="left-earn-division">
                 <h2>Apr</h2>
               </div>
-              <div class="right-earn-division">
+              <div class="right-earn-division highlight">
                 <h2>15.35%</h2>
               </div>
             </div>
 
             <div className="user-input">
-              <div className="btn earn-btn">
-                <button className="btn_primary" onClick={stakeTokens}>Deposit</button>
+              <div className="earn-btn">
+                <button className="btn_primary earn-buttons" onClick={stakeTokens}>Deposit</button>
               </div>
-              <div className="btn earn-btn">
+              <div className="info-text">
                 <a href="/#" onClick={stakeTokens}>More Info</a>
               </div>
             </div>

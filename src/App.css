@@ -363,7 +363,7 @@ font-family: 'Poppins';
 .btn {
   display: flex;
   justify-content: space-between;
-  /* margin: 0 20px; */
+  margin: 0 20px; 
   align-items: center;
   width: 100%;
   flex-wrap: wrap;

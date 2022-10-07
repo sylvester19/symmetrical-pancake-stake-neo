@@ -22,14 +22,16 @@ const Header = () => {
             <div className={isOpen ? " mobile-menu-link" : "menu-link"}>
                 <ul className="navbarul">
                     <li>
-                        <a
-                            className={active === "-1" ? "actived" : ""}
-                            href="/#"
-                            id={"-1"}
-                            onClick={handleClick}
-                        >
-                            Staking
-                        </a>
+                        <Link to="/">
+                            <a
+                                className={active === "-1" ? "actived" : ""}
+                                href="/#"
+                                id={"-1"}
+                                onClick={handleClick}
+                            >
+                                Staking
+                            </a>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/earn">

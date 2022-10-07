@@ -11,6 +11,7 @@ import Earn from "./components/Earn"
 import Header from './components/Header/Index'
 import Footer from './components/Footer/index'
 import { Router, Location } from '@reach/router';
+import './components/assets/style.scss'
 
 function App() {
 
