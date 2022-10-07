@@ -1,15 +1,16 @@
-import { useState } from "react";
+import React from 'react';
 import "./App.css";
-import { ethers } from "ethers";
 import "@rainbow-me/rainbowkit/dist/index.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { darkTheme } from "@rainbow-me/rainbowkit";
 import Staking from "./components/Staking";
-import Base from "./components/Base"
+import Earn from "./components/Earn"
+import Header from './components/Header/Index'
+import Footer from './components/Footer/index'
+import { Router, Location } from '@reach/router';
 
 function App() {
 
@@ -50,14 +51,32 @@ function App() {
     provider,
   });
 
+  const PosedRouter = ({ children }) => (
+    <Location>
+      {({ location }) => (
+        <div id='routerhang'>
+          <div key={location.key}>
+            <Router location={location}>
+              {children}
+            </Router>
+          </div>
+        </div>
+      )}
+    </Location>
+  );
+
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider
         chains={chains}
         theme={darkTheme({ borderRadius: "medium" })}
       >
-        <Staking />
-        <Base />
+        <Header />
+        <PosedRouter>
+          <Staking exact path="/" />
+          <Earn exact path="/earn" />
+        </PosedRouter>
+        <Footer />
       </RainbowKitProvider>
     </WagmiConfig>
   );
