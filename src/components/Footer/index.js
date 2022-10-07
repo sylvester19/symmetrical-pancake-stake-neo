@@ -9,6 +9,7 @@ import { FaMedium } from 'react-icons/fa'
 
 const Footer = () => {
     return (
+        <div className="footer">
         <div className='Footer'>
             <div className='policy'>
                 <p>All rights reserved NOE GLOBAL 2022 </p>
@@ -25,6 +26,7 @@ const Footer = () => {
             <div className='info_more'>
                 <p>More infos : <a href="mailto:contact@noe-global.com">contact@noe-global.com</a></p>
             </div>
+        </div>
         </div>
     );
 }

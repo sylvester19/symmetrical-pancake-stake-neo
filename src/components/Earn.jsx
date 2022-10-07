@@ -321,11 +321,11 @@ const Earn = () => {
               <h1>Promo</h1>
             </div>
             <div className="heading-earn">
-              <div className="row">
-                <div className="column" style={{ width: '150px' }}>
+              <div className="row earnBoxHead">
+                <div>
                   <div class="placeholder"></div>
                 </div>
-                <div className="column" style={{ width: '200px' }}>
+                <div>
                   <h2>CHO</h2>
                 </div>
               </div>
@@ -375,15 +375,15 @@ const Earn = () => {
           </div>
 
           <div className="earn-left card earn">
-            <div className="floating-card-two">
+            <div className="floating-card">
               <h1>Promo</h1>
             </div>
             <div className="heading-earn">
-              <div className="row">
-                <div className="column" style={{ width: '86px' }}>
+              <div className="row earnBoxHead">
+                <div>
                   <div class="placeholder"></div>
                 </div>
-                <div className="column" style={{ width: '290px' }}>
+                <div>
                   <h2>USDT / USDC</h2>
                 </div>
               </div>
@@ -433,15 +433,15 @@ const Earn = () => {
 
           </div>
           <div className="earn-left card earn">
-            <div className="floating-card-three">
+            <div className="floating-card">
               <h1>Promo</h1>
             </div>
             <div className="heading-earn">
-              <div className="row">
-                <div className="column" style={{ width: '86px' }}>
+              <div className="row earnBoxHead">
+                <div>
                   <div class="placeholder"></div>
                 </div>
-                <div className="column" style={{ width: '290px' }}>
+                <div>
                   <h2>Curve IbEUR</h2>
                 </div>
               </div>

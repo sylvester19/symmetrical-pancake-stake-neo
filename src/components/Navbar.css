@@ -14,12 +14,16 @@ html {
     height: auto;
 }
 
+.footer{
+    background: #293280;
+}
+
 .Footer{
+    width: 1280px;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    background: #293280;
     align-items: center;
+    margin: 0 auto;
     padding: 0 20px;
 }
 
@@ -87,15 +91,18 @@ li {
     list-style: none;
 }
 
-.main-nav {
+.header{
     background-color: #293280;
-    width: 100%;
+}
+
+.main-nav {
+    width: 1280px;
     height: 10rem;
     z-index: 100;
     display: grid;
     grid-template-columns: 10% 1fr 3fr 10%;
     cursor: pointer;
-
+    margin: 0 auto;
 }
 
 .button {
@@ -168,7 +175,7 @@ background: linear-gradient(90deg, #49A5D3 0.15%, #7CF0B2 100.15%) !important;
 }
 
 .navbarul li {
-    padding-bottom: 5px !important;
+    padding: 10px !important;
 
 }
 

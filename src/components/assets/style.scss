@@ -5,15 +5,14 @@
 }
 
 .earn-btn {
-    margin-left: 80px;
+    text-align: center;
     padding-bottom: 10px;
 }
 
 .info-text {
-    padding-left: 20px;
     font-size: 15px;
-    padding-left: 157px;
     margin-top: 10px;
+    text-align: center;
 }
 
 .highlight {
@@ -45,11 +44,10 @@
 }
 
 .floating-card {
-    position: relative;
-    font-size: .8rem;
+    font-size: 0.8rem;
     position: absolute;
-    right: 100px;
-    top: 148px;
+    right: 42px;
+    top: -14px;
     width: 150px;
     background: linear-gradient(90deg, #4EA5F4 0%, #7CF0B1 100%);
     padding: 10px 10px;
@@ -95,13 +93,23 @@
     text-align: center;
 }
 
+.earnBoxHead {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    column-gap: 10px;
+    padding:5px 0;
+}
+
+
+
 @media screen and (min-width: 1900px) {
     .earn-btn {
-        margin-left: 120px;
+        margin-left: 0;
     }
 
     .info-text {
-        padding-left: 180px;
+        padding-left: 0;
+        text-align: center;
     }
 
     .floating-card-two {

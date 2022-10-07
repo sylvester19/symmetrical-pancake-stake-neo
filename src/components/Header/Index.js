@@ -15,6 +15,7 @@ const Header = () => {
 
 
     return (
+        <div className="header">
         <nav className="main-nav">
             <div className="logo">
                 <a target="__blank" href='https://noe-global.com/'><img src={logo} alt="img" /></a>
@@ -39,6 +40,7 @@ const Header = () => {
                                 className={active === "0" ? "actived" : ""}
                                 href="/#"
                                 id={"0"}
+                                onClick={handleClick}
                             >
                                 Earn
                             </a>
@@ -105,6 +107,7 @@ const Header = () => {
                 </div>
             </div>
         </nav>
+        </div>
     );
 }
 export default Header;
