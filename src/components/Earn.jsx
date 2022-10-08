@@ -21,7 +21,11 @@ const Earn = () => {
   const [choapr, setChoApr] = useState("")
   const [usdtapr, setUsdtapr] = useState("")
   const [usdcapr, setusdcapr] = useState("")
+  const [deposit, setdeposit] = useState(false)
+  const [deposittoken, setdeposittoken] = useState("")
+  const [depositfunction, setdeposifunction] = useState("")
   const [loading, setLoading] = useState("loading")
+
 
 
 
@@ -35,19 +39,48 @@ const Earn = () => {
     }
   }, [signer]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  console.log("My Address", myaddress);
+  const staking = new ethers.Contract(value.stakingAddress, stakingAbi, signer)
+  const token = new ethers.Contract(value.stakingToken, tokenAbi, signer)
+  const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer);
+  const period = 24;
 
   async function getAPRInfo() {
-    const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer)
-    const period = 24;
     let choaprinfo = await promocontract.aprs(value.chotokenaddress, period);
     let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
     let usdcaprinfo = await promocontract.aprs(value.usdcokenaddress, period);
     setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(usdcaprinfo.toString())
-
   }
 
-
+  async function Deposit() {
+    try {
+      let depositamount = ethers.utils.parseUnits(deposittoken, 'ether');
+      await token.approve(myaddress, depositamount);
+      if (deposit === "cho") {
+        try {
+          let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, period);
+          console.log("Deposit Function=>", depositfunction)
+        } catch (err) {
+          alert(err.message)
+        }
+      } else if (deposit === "usdt") {
+        try {
+          let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, period);
+          console.log("Deposit Function=>", depositfunction)
+        } catch (err) {
+          alert(err.message)
+        }
+      } else {
+        try {
+          let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, period);
+          console.log("Deposit Function=>", depositfunction)
+        } catch (err) {
+          alert(err.message)
+        }
+      }
+    } catch (err) {
+      alert(err.message)
+    }
+  }
 
 
 
@@ -108,7 +141,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("cho")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -166,7 +199,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("usdt")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -225,7 +258,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("usdc")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
@@ -235,9 +268,9 @@ const Earn = () => {
           </div>
         </div>
 
-        {loading == "nowallet" && (
+        {loading === "nowallet" && (
           <div className='popup'>
-            <div className='popcontent'>
+            <div className='popcontent' style={{ background: 'white' }}>
               <h5><center>Please Connect your wallet to continue</center></h5>
               <p>&nbsp;</p>
               <p><center><ClipLoader color="#3C226C" size={40} /></center> </p>
@@ -247,7 +280,7 @@ const Earn = () => {
           </div>
         )}
 
-        {loading == "loading" && (
+        {loading === "loading" && (
           <div className='popup loading'>
             <div className='popcontent'>
               <p>&nbsp;</p>
@@ -256,6 +289,22 @@ const Earn = () => {
             </div>
           </div>
         )}
+
+        {deposit && (
+          <div className='popup'>
+            <div className='popcontent' style={{ background: 'white' }}>
+              <h5><center>Choose the Number of Token's you want to deposit ?</center></h5>
+              <p>&nbsp;</p>
+              <p><center><input type="text" value={deposittoken}
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder="Enter Token" className="form-control" /></center> </p>
+              <p>&nbsp;</p>
+              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit Token</button></center>
+            </div>
+          </div>
+        )}
+
+
+
       </section>
 
     </div>
