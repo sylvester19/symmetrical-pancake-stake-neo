@@ -97,7 +97,7 @@
     display: grid;
     grid-template-columns: 30% 70%;
     column-gap: 10px;
-    padding:5px 0;
+    padding: 5px 0;
 }
 
 
@@ -125,4 +125,33 @@
     h2 {
         color: linear-gradient(270.38deg, #7CF0B1 4.82%, #4EA5F4 95.84%);
     }
+}
+
+/* Popup MOdal*/
+.popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    height: 100%;
+    background: transparent;
+    z-index: 999;
+}
+
+.popcontent {
+    position: relative;
+    border-radius: 8px;
+    background: transparent;
+    padding: 30px;
+    width: 100%;
+    background-color: white;
+    color: black;
+    max-width: 500px;
+    font-size: 20px;
+    height: max-content;
+    margin: 150px 0 0;
 }

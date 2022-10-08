@@ -2,6 +2,9 @@
     "stakingAddress": "0x93F14F74eda31874D25191A1bB41a21DC7987833",
     "stakingToken": "0xBbE626Be0abD64e8efd72A934F08ff9E81C909c8",
     "promoDeposit":"0x47bbbCE535cCD33036737D44b764dF171f799333",
+    "chotokenaddress": "0xbba39fd2935d5769116ce38d46a71bde9cf03099",
+    "usdttokenaddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "usdcokenaddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "rpcURl":"https://bsc-dataseed.binance.org/"
     
 }
