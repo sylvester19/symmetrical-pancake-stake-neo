@@ -129,7 +129,7 @@ const Earn = () => {
         alert(err.message)
       }
     } else {
-      alert("The Maximum Deposited Amount is 200 USD");
+      alert("The Minimum Deposited Amount is 200 USD");
     }
   }
 
