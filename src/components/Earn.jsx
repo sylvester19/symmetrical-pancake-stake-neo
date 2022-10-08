@@ -358,7 +358,7 @@ const Earn = () => {
         {open && (
           <div className='popup'>
             <div className='popcontent' style={{ background: 'white' }}>
-              <button className='btn-close' onClick={() => setdeposit(false)}>x</button>
+              <button className='btn-close' onClick={() => setopen(false)}>x</button>
               <p>&nbsp;</p>
               <h5><center>Choose Token</center></h5>
               <p>&nbsp;</p>
