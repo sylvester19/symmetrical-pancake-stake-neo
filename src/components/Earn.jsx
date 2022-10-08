@@ -23,7 +23,7 @@ const Earn = () => {
   const [usdcapr, setusdcapr] = useState("")
   const [deposit, setdeposit] = useState(false)
   const [deposittoken, setdeposittoken] = useState("")
-  const [depositfunction, setdeposifunction] = useState("")
+  const [duration, setduration] = useState("")
   const [loading, setLoading] = useState("loading")
 
 
@@ -42,6 +42,11 @@ const Earn = () => {
   const staking = new ethers.Contract(value.stakingAddress, stakingAbi, signer)
   const token = new ethers.Contract(value.stakingToken, tokenAbi, signer)
   const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer);
+
+  var startdate = new Date();
+  var enddate = new Date(duration);
+  var seconds = (enddate.getTime() - startdate.getTime()) / 1000;
+  const deployperiod = Math.floor(new Date().getTime() / 1000) + seconds;
   const period = 24;
 
   async function getAPRInfo() {
@@ -52,33 +57,37 @@ const Earn = () => {
   }
 
   async function Deposit() {
-    try {
-      let depositamount = ethers.utils.parseUnits(deposittoken, 'ether');
-      await token.approve(myaddress, depositamount);
-      if (deposit === "cho") {
-        try {
-          let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, period);
-          console.log("Deposit Function=>", depositfunction)
-        } catch (err) {
-          alert(err.message)
+    if (deposittoken >= 200) {
+      try {
+        let depositamount = ethers.utils.parseUnits(deposittoken, 'ether');
+        await token.approve(myaddress, depositamount);
+        if (deposit === "cho") {
+          try {
+            let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
+            console.log("Deposit Function=>", depositfunction)
+          } catch (err) {
+            alert(err.message)
+          }
+        } else if (deposit === "usdt") {
+          try {
+            let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
+            console.log("Deposit Function=>", depositfunction)
+          } catch (err) {
+            alert(err.message)
+          }
+        } else {
+          try {
+            let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
+            console.log("Deposit Function=>", depositfunction)
+          } catch (err) {
+            alert(err.message)
+          }
         }
-      } else if (deposit === "usdt") {
-        try {
-          let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, period);
-          console.log("Deposit Function=>", depositfunction)
-        } catch (err) {
-          alert(err.message)
-        }
-      } else {
-        try {
-          let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, period);
-          console.log("Deposit Function=>", depositfunction)
-        } catch (err) {
-          alert(err.message)
-        }
+      } catch (err) {
+        alert(err.message)
       }
-    } catch (err) {
-      alert(err.message)
+    } else {
+      alert("Please Choose a Token Value Greater Then $200");
     }
   }
 
@@ -124,7 +133,8 @@ const Earn = () => {
                 <h2>Duration</h2>
               </div>
               <div class="right-earn-division">
-                <h2>6/12/12 <br></br>Months</h2>
+                <input type="date" value={duration}
+                  onChange={(e) => setduration(e.target.value)} className='datepicker' />
               </div>
             </div>
             <div class="earn-border">
@@ -182,7 +192,8 @@ const Earn = () => {
                 <h2>Duration</h2>
               </div>
               <div class="right-earn-division">
-                <h2>6/12/12 <br></br>Months</h2>
+                <input type="date" value={duration}
+                  onChange={(e) => setduration(e.target.value)} className='datepicker' />
               </div>
             </div>
             <div class="earn-border">
