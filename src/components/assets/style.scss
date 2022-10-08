@@ -139,6 +139,26 @@
     height: 100%;
     background: transparent;
     z-index: 999;
+
+    .btn-close {
+        font-size: 1.2rem;
+        font-weight: bold;
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        z-index: 9991;
+        color: rgb(255, 255, 255);
+        background: #293280;
+        border-radius: 50px;
+        cursor: pointer;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        border: none;
+        margin: 4px;
+        opacity: 1;
+        text-align: center;
+    }
 }
 
 input[type=text] {
@@ -162,6 +182,7 @@ input[type=text] {
     font-size: 20px;
     height: max-content;
     margin: 150px 0 0;
+
 }
 
 .loading {

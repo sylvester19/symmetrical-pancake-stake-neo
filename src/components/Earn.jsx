@@ -293,6 +293,8 @@ const Earn = () => {
         {deposit && (
           <div className='popup'>
             <div className='popcontent' style={{ background: 'white' }}>
+              <button className='btn-close' onClick={() => setdeposit(false)}>x</button>
+              <p>&nbsp;</p>
               <h5><center>Choose the Number of Token's you want to deposit ?</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text" value={deposittoken}
