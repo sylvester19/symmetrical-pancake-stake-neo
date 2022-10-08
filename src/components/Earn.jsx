@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import value from '.././value.json'
 import tokenAbi from '../tokenAbi.json'
 import stakingAbi from '../stakingAbi.json'
+import promodeposit from '../promoDeposit.json'
 import './Navbar.css';
 
 
@@ -34,6 +35,8 @@ const Earn = () => {
     tokenAbi,
     signer,
   )
+
+
   //current token is DCU Testnet
   //token address - 0xC6dFc0F5D0Cdd26c1e3f169e66745488a06Cd0b7
   // busd address - 0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7
@@ -65,6 +68,7 @@ const Earn = () => {
 
   useEffect(() => {
     getPoolInfo()
+    // getAPRInfo()
     refreshData(signer)
 
   }, [signer, poolId, claimableTokens]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -82,12 +86,25 @@ const Earn = () => {
     }
   }
 
+  async function getAPRInfo() {
+    const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer)
+    console.log("Promo Contract=>", promocontract)
+    const tokenaddress = "0xbba39fd2935d5769116ce38d46a71bde9cf03099";
+    const period = 24;
+
+    console.log("Data=>", tokenaddress, "Periosd=>", period)
+
+    let aprinfo = await promocontract.aprs(tokenaddress, period);
+    console.log("APR Info", aprinfo.toString())
+
+  }
 
   async function getPoolInfo() {
     try {
       let rpcUrl = value.rpcURl;
       let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
       let stake_temp = new ethers.Contract(value.stakingAddress, stakingAbi, provider_);
+      console.log("Stacking Contract=>", stake_temp)
       var _poolInfo = await stake_temp.poolInfo(poolId);
       console.log("Pool Info: ", _poolInfo);
       console.log("Emergency Fees: ", _poolInfo.emergencyFees.toString());
