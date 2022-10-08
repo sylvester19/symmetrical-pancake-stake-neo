@@ -241,6 +241,8 @@ const Earn = () => {
               <h5><center>Please Connect your wallet to continue</center></h5>
               <p>&nbsp;</p>
               <p><center><ClipLoader color="#3C226C" size={40} /></center> </p>
+              <p>&nbsp;</p>
+              <center><button onClick={() => setLoading(false)} className="btn_primary earn-buttons" >Connecting Wallet</button></center>
             </div>
           </div>
         )}
