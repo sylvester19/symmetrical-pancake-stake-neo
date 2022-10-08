@@ -248,7 +248,7 @@ const Earn = () => {
         )}
 
         {loading == "loading" && (
-          <div className='popup'>
+          <div className='popup loading'>
             <div className='popcontent'>
               <p>&nbsp;</p>
               <p><center><ClipLoader color="#3C226C" size={40} /></center> </p>
