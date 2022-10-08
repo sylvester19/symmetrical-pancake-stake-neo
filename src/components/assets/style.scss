@@ -161,10 +161,17 @@
     }
 }
 
+
+
 .datepicker {
     padding: 10px;
     margin-right: -50px;
     border-radius: 10px;
+    width: 100%;
+}
+
+.token {
+    color: #19368F;
 }
 
 input[type=text] {
@@ -193,4 +200,8 @@ input[type=text] {
 
 .loading {
     background: transparent !important;
+}
+
+.wallet-popbutton {
+    padding-left: 30%;
 }
