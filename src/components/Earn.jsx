@@ -23,9 +23,10 @@ const Earn = () => {
   const [usdtapr, setUsdtapr] = useState("")
   const [usdcapr, setusdcapr] = useState("")
   const [deposit, setdeposit] = useState(false)
-  const [tokenprice, setTokenprice] = useState(1)
-  const [deposittoken, setdeposittokens] = useState(1)
+  const [tokenprice, setTokenprice] = useState(0)
+  const [deposittoken, setdeposittokens] = useState(0)
   const [duration, setduration] = useState("")
+  const [open, setopen] = useState("")
   const [loading, setLoading] = useState("loading")
 
 
@@ -34,39 +35,21 @@ const Earn = () => {
     if (signer?._address) {
       setMyaddress(signer._address)
       setLoading(false);
-      fetchmarketprice()
       getAPRInfo()
     } else {
       setLoading("nowallet")
     }
   }, [signer]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const setdeposittoken = (e) => {
-    setdeposittokens(e);
-    const url = 'https://cors-digi.herokuapp.com/' + 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=CHO';
-    fetch(url, {
-      method: "GET",
-      withCredentials: true,
-      headers: {
-        "X-CMC_PRO_API_KEY": "79da1075-a7f3-495e-8285-774af970f7bc",
-        "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest"
-      }
-    })
-      .then(resp => resp.json())
-      .then(function (data) {
-        let marketvalue = data.data[0].quote.USD.price;
-        let finaldata = marketvalue * e;
-        setTokenprice(finaldata)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const setdeposits = (e) => {
+    setdeposit(e)
+    setopen(false)
   }
 
-  const fetchmarketprice = () => {
-
-    const url = 'https://cors-digi.herokuapp.com/' + 'https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=CHO';
+  const setdeposittoken = (e) => {
+    setdeposittokens(e);
+    let symbol = deposit;
+    const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${e}&symbol=${symbol}`;
     fetch(url, {
       method: "GET",
       withCredentials: true,
@@ -84,6 +67,7 @@ const Earn = () => {
         console.log(error);
       });
   }
+
 
   const staking = new ethers.Contract(value.stakingAddress, stakingAbi, signer)
   const token = new ethers.Contract(value.stakingToken, tokenAbi, signer)
@@ -103,14 +87,14 @@ const Earn = () => {
       try {
         let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
         await token.approve(myaddress, depositamount);
-        if (deposit === "cho") {
+        if (deposit === "CHO") {
           try {
             let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             alert(err.message)
           }
-        } else if (deposit === "usdt") {
+        } else if (deposit === "USDT") {
           try {
             let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
@@ -197,7 +181,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("cho")} className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("CHO")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -260,7 +244,8 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("usdt")} className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setopen(true)} className="btn_primary earn-buttons" >Deposit</button>
+
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -319,7 +304,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("usdc")} className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("USDC")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
@@ -361,15 +346,32 @@ const Earn = () => {
               <h5><center>Enter Number of Token</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text"
-                onChange={(e) => setdeposittoken(e.target.value)} placeholder="Enter CHO" className="form-control" /></center> </p>
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter ${deposit}`} className="form-control" /></center> </p>
               <p>&nbsp;</p>
-              <p><center><h5>Spending ${tokenprice} For <span className='token'>{deposittoken} CHO</span></h5> </center></p>
+              <p><center><h5>Spending ${tokenprice.toFixed(2)} For <span className='token'>{deposittoken} {deposit}</span></h5> </center></p>
               <p>&nbsp;</p>
               <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit Token</button></center>
             </div>
           </div>
         )}
 
+        {open && (
+          <div className='popup'>
+            <div className='popcontent' style={{ background: 'white' }}>
+              <button className='btn-close' onClick={() => setdeposit(false)}>x</button>
+              <p>&nbsp;</p>
+              <h5><center>Choose Token</center></h5>
+              <p>&nbsp;</p>
+              <select className='datepicker'
+                onChange={(e) => setdeposits(e.target.value)}>
+                <option>Choose Token</option>
+                <option value="USDT">USDT Token</option>
+                <option value="USDC">USDC Token</option>
+              </select>
+              <p>&nbsp;</p>
+            </div>
+          </div>
+        )}
 
 
       </section>
