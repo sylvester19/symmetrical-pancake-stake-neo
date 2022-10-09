@@ -323,14 +323,9 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CHO")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Staking: </p>
+                <a href="/#">More Info</a>
               </div>
-              <div className="info-text">
-                <p>Lock time: </p>
-              </div>
-              <div className="info-text">
-                <a href="/#" >More Info</a>
-              </div>
+
             </div>
           </div>
 
@@ -392,17 +387,11 @@ const Earn = () => {
                 <button onClick={() => setopen(true)} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Staking: </p>
-              </div>
-              <div className="info-text">
-                <p>Lock time: </p>
-              </div>
-              <div className="info-text">
                 <a href="/#" >More Info</a>
               </div>
             </div>
-
           </div>
+
           <div className="earn-left card earn">
             <div className="floating-card">
               <h1>Promo</h1>
@@ -425,7 +414,7 @@ const Earn = () => {
                 <h2>TVL</h2>
               </div>
               <div class="right-earn-division">
-                <h2>$2 859 506</h2>
+                <h2>$2 859</h2>
               </div>
             </div>
             <div class="earn-border">
@@ -457,18 +446,49 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CURVE")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Staking: </p>
-              </div>
-              <div className="info-text">
-                <p>Lock time: </p>
-              </div>
-              <div className="info-text">
                 <a href="/#">More Info</a>
               </div>
             </div>
 
           </div>
         </div>
+
+
+        <div className="container new">
+          <div className="earn-left card earn section-two">
+            <div className="user-input">
+              <div className="info-text">
+                <p>Total Staking: </p>
+              </div>
+              <div className="info-text">
+                <p>Lock time: </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="earn-left card earn section-two">
+            <div className="user-input">
+              <div className="info-text">
+                <p>Total Staking: </p>
+              </div>
+              <div className="info-text">
+                <p>Lock time: </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="earn-left card earn section-two">
+            <div className="user-input">
+              <div className="info-text">
+                <p>Total Staking: </p>
+              </div>
+              <div className="info-text">
+                <p>Lock time: </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         {loading === "nowallet" && (
           <div className='popup'>

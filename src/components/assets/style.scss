@@ -161,7 +161,21 @@
     }
 }
 
+.box-earn {
+    width: 100%;
+    background-color: rgba(30, 79, 255, .5176470588235295);
+    border: solid 2px #ffffff;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    font-size: medium;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 
+    p {
+        font-weight: 500;
+    }
+}
 
 .datepicker {
     padding: 10px;
@@ -204,4 +218,12 @@ input[type=text] {
 
 .wallet-popbutton {
     padding-left: 30%;
+}
+
+.section-two {
+    min-height: 10px !important;
+}
+
+.new {
+    margin-top: -3rem !important;
 }
