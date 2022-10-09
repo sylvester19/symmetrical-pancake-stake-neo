@@ -7,6 +7,10 @@ import tokenAbi from '../tokenAbi.json'
 import stakingAbi from '../stakingAbi.json'
 import ClipLoader from "react-spinners/ClipLoader";
 import promodeposit from '../promoDeposit.json'
+import choAbi from '../choAbi.json'
+import usdtAbi from '../usdtAbi.json'
+import curveAbi from '../curveAbi.json'
+import usdcAbi from '../usdcAbi.json'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './Navbar.css';
 
@@ -48,24 +52,29 @@ const Earn = () => {
 
   const setdeposittoken = (e) => {
     setdeposittokens(e);
-    let symbol = deposit;
-    const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${e}&symbol=${symbol}`;
-    fetch(url, {
-      method: "GET",
-      withCredentials: true,
-      headers: {
-        "X-CMC_PRO_API_KEY": "79da1075-a7f3-495e-8285-774af970f7bc",
-        "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest"
-      }
-    })
-      .then(resp => resp.json())
-      .then(function (data) {
-        setTokenprice(data.data[0].quote.USD.price)
+    if (deposit === "CURVE") {
+      let totalvalue = e * 0.957
+      setTokenprice(totalvalue)
+    } else {
+      let symbol = deposit;
+      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${e}&symbol=${symbol}`;
+      fetch(url, {
+        method: "GET",
+        withCredentials: true,
+        headers: {
+          "X-CMC_PRO_API_KEY": "79da1075-a7f3-495e-8285-774af970f7bc",
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest"
+        }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+        .then(resp => resp.json())
+        .then(function (data) {
+          setTokenprice(data.data[0].quote.USD.price)
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }
 
 
@@ -77,18 +86,21 @@ const Earn = () => {
   async function getAPRInfo() {
     let choaprinfo = await promocontract.aprs(value.chotokenaddress, period);
     let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
+    console.log("Approve=>", usdtaprinfo)
     let usdcaprinfo = await promocontract.aprs(value.usdcokenaddress, period);
-    setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(usdcaprinfo.toString())
+    let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
+    setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
   }
 
 
   async function Deposit() {
     if (tokenprice >= 200) {
+      let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
       try {
-        let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
-        await token.approve(myaddress, depositamount);
         if (deposit === "CHO") {
           try {
+            const chotoken = new ethers.Contract(value.chotokenaddress, choAbi, signer)
+            await chotoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
@@ -96,14 +108,28 @@ const Earn = () => {
           }
         } else if (deposit === "USDT") {
           try {
+            const usdttoken = new ethers.Contract(value.usdttokenaddress, usdtAbi, signer)
+            await usdttoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
+            console.log("Deposit Function=>", depositfunction)
+          } catch (err) {
+            alert(err.message)
+          }
+        } else if (deposit === "USDC") {
+          try {
+            const usdctoken = new ethers.Contract(value.usdcokenaddress, usdcAbi, signer)
+            console.log("Usedc=>", usdctoken)
+            await usdctoken.approve(myaddress, depositamount);
+            let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             alert(err.message)
           }
         } else {
           try {
-            let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
+            const curvetoken = new ethers.Contract(value.curvetokenaddress, curveAbi, signer)
+            await curvetoken.approve(myaddress, depositamount);
+            let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             alert(err.message)
@@ -304,7 +330,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("USDC")} className="btn_primary earn-buttons" >Deposit</button>
+                <button onClick={() => setdeposit("CURVE")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
