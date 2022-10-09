@@ -323,10 +323,10 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CHO")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Stacking: </p>
+                <p>Total Staking: </p>
               </div>
               <div className="info-text">
-                <p>Lock time: {locktime}</p>
+                <p>Lock time: </p>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -392,10 +392,10 @@ const Earn = () => {
                 <button onClick={() => setopen(true)} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Stacking: </p>
+                <p>Total Staking: </p>
               </div>
               <div className="info-text">
-                <p>Lock time: {locktime}</p>
+                <p>Lock time: </p>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -457,10 +457,10 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CURVE")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
-                <p>Total Stacking: </p>
+                <p>Total Staking: </p>
               </div>
               <div className="info-text">
-                <p>Unlock time: </p>
+                <p>Lock time: </p>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
