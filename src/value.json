@@ -4,7 +4,7 @@
     "promoDeposit":"0x47bbbCE535cCD33036737D44b764dF171f799333",
     "chotokenaddress": "0xbba39fd2935d5769116ce38d46a71bde9cf03099",
     "usdttokenaddress": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-    "usdcokenaddress": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "usdctokenaddress": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
     "curvetokenaddress":"0x67e019bfbd5a67207755D04467D6A70c0B75bF60",
     "rpcURl":"https://bsc-dataseed.binance.org/"
     

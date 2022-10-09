@@ -28,11 +28,35 @@ const Earn = () => {
   const [usdcapr, setusdcapr] = useState("")
   const [deposit, setdeposit] = useState(false)
   const [tokenprice, setTokenprice] = useState(0)
+  const [userlock, setUserlock] = useState(0)
   const [deposittoken, setdeposittokens] = useState(0)
   const [duration, setduration] = useState("")
   const [open, setopen] = useState("")
   const [loading, setLoading] = useState("loading")
 
+  const [poolId, setPoolId] = useState(1)
+  const [poolInfo, setPoolInfo] = useState()
+  const [userInfo, setUserInfo] = useState()
+  const [walletAddressInfo, setWalletAddressInfo] = useState()
+  const [mystakebalance, setMystakeBalance] = useState(0)
+  const [amount, setAmount] = useState()
+  const [locktime, setLockTime] = useState(1)
+  const [unlockTime, setUnlockTime] = useState(1);
+  const [emergencyfee, setEmergencyfee] = useState()
+  const [poolsize, setPoolSize] = useState()
+  const [maxpool, setMaxPool] = useState(0)
+  const [reward, setReward] = useState()
+  const [myTokenBalance, setMyTokenBalance] = useState(0)
+  const [istokenapproved, settokenapproved] = useState(false)
+  const [buttonactive1, setButtonactive1] = useState("activebutton")
+  const [buttonactive2, setButtonactive2] = useState("")
+  const [buttonactive3, setButtonactive3] = useState("")
+  const [buttonactive4, setButtonactive4] = useState("")
+  const [maxtoken, setMaxToken] = useState(0)
+  const [maxContribution, setMaxContribution] = useState(0)
+  const [minContribution, setMinContribution] = useState(0)
+  const [claimableTokens, setClaimableTokens] = useState(0)
+  const [errors, setError] = useState()
 
 
   useEffect(() => {
@@ -40,10 +64,97 @@ const Earn = () => {
       setMyaddress(signer._address)
       setLoading(false);
       getAPRInfo()
+      getPoolInfo()
     } else {
       setLoading("nowallet")
     }
   }, [signer]) // eslint-disable-line react-hooks/exhaustive-deps
+
+
+  async function getPoolInfo() {
+    try {
+      let rpcUrl = value.rpcURl;
+      let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
+      let stake_temp = new ethers.Contract(value.stakingAddress, stakingAbi, provider_);
+      var _poolInfo = await stake_temp.poolInfo(poolId);
+      console.log("Pool Info: ", _poolInfo);
+      console.log("Emergency Fees: ", _poolInfo.emergencyFees.toString());
+      const emergencywithdrawfee = await _poolInfo.emergencyFees.toString()
+      const currrentpoolsize = await _poolInfo.currentPoolSize.toString()
+      const maxcontribution = await _poolInfo.maxContribution.toString()
+      const maxcontributionconverted = ethers.utils.formatEther(maxcontribution)
+      const minicontribution = await _poolInfo.minContribution.toString()
+      const minicontributionconverted = ethers.utils.formatEther(minicontribution)
+      const currrentpoolsizeConverted = Math.floor(ethers.utils.formatEther(currrentpoolsize))
+      const maxpool = await _poolInfo.maxPoolSize.toString()
+      const maxpoolConverted = ethers.utils.formatEther(maxpool)
+      const lockDayss = await _poolInfo.lockDays.toString();
+      setPoolInfo(_poolInfo);
+      setMinContribution(minicontributionconverted)
+      setEmergencyfee(emergencywithdrawfee);
+      setPoolSize(currrentpoolsizeConverted);
+      setLockTime(lockDayss)
+      setMaxPool(maxpoolConverted)
+      setMaxContribution(maxcontributionconverted)
+      console.log("maxpool=>" + maxpoolConverted)
+      console.log("current pools=>" + currrentpoolsizeConverted)
+
+      getUserInfo(); getClaimableTokens(); getUserLockTime();
+    } catch (err) {
+      console.log(err.message);
+    }
+
+  }
+
+  async function getUserInfo() {
+
+    try {
+      let id = 1715581;
+      let address = "0xd3eb6a4a259cb46984573221856a8eb51420ab9f";
+      console.log("Pool ID=>" + id, "Address=>", address)
+      console.log("Pool Info End Here")
+      let _userInfo = await staking.userInfo(id, address);
+      console.log("my stake token amount: ", ethers.utils.formatEther(_userInfo.amount.toString()));
+      setMystakeBalance(ethers.utils.formatEther(_userInfo.amount.toString()));
+    } catch (err) {
+      console.log("User error", err);
+    }
+  }
+
+  async function getClaimableTokens() {
+    try {
+      let userAddress = await signer.getAddress();
+      let _claimableTokens = await staking.claimableRewards(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
+      console.log("Claimable Tokens: ", _claimableTokens.toString());
+      setClaimableTokens(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+    } catch (error) {
+      console.log("Claimable error", error);
+    }
+  }
+
+  async function getUserLockTime() {
+    try {
+      let userAddress = await signer.getAddress()
+      let myunlocktime = await staking.getUserLockTime(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
+      let _wallet = await signer.getAddress();
+      let _userInfo = await staking.userInfo(poolId, _wallet);
+      let _stakedAmount = ethers.utils.formatEther(_userInfo.amount.toString());
+
+      if (_stakedAmount === 0) {
+        setUnlockTime("Not staked yet");
+        return;
+      }
+      let _timestamp = parseInt(myunlocktime.toString()) * 1000;
+      let _time = new Date(_timestamp);
+      console.log("Unlock Time: ", _time);
+      if (_timestamp > 0) setUnlockTime(_time.toString());
+      else setUnlockTime("Not staked yet");
+    } catch (err) {
+      console.log("User error", err);
+    }
+  }
+
+
 
   const setdeposits = (e) => {
     setdeposit(e)
@@ -78,19 +189,23 @@ const Earn = () => {
   }
 
 
-  const staking = new ethers.Contract(value.stakingAddress, stakingAbi, signer)
-  const token = new ethers.Contract(value.stakingToken, tokenAbi, signer)
+  const staking = new ethers.Contract(
+    value.stakingAddress,
+    stakingAbi,
+    signer,
+  )
   const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer);
   const period = 24; const deployperiod = duration;
 
   async function getAPRInfo() {
     let choaprinfo = await promocontract.aprs(value.chotokenaddress, period);
     let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
-    console.log("Approve=>", usdtaprinfo)
-    let usdcaprinfo = await promocontract.aprs(value.usdcokenaddress, period);
     let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
     setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
+
   }
+
+
 
 
   async function Deposit() {
@@ -117,12 +232,10 @@ const Earn = () => {
           }
         } else if (deposit === "USDC") {
           try {
-            const usdctoken = new ethers.Contract(value.usdcokenaddress, usdcAbi, signer)
-            console.log("Usedc=>", usdctoken)
-            await usdctoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
+            console.log("Error=>", err)
             alert(err.message)
           }
         } else {
@@ -210,6 +323,12 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CHO")} className="btn_primary earn-buttons" >Deposit</button>
               </div>
               <div className="info-text">
+                <p>Total Stacking: </p>
+              </div>
+              <div className="info-text">
+                <p>Lock time: {locktime}</p>
+              </div>
+              <div className="info-text">
                 <a href="/#" >More Info</a>
               </div>
             </div>
@@ -271,7 +390,12 @@ const Earn = () => {
             <div className="user-input">
               <div className="earn-btn">
                 <button onClick={() => setopen(true)} className="btn_primary earn-buttons" >Deposit</button>
-
+              </div>
+              <div className="info-text">
+                <p>Total Stacking: </p>
+              </div>
+              <div className="info-text">
+                <p>Lock time: {locktime}</p>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -331,6 +455,12 @@ const Earn = () => {
             <div className="user-input">
               <div className="earn-btn">
                 <button onClick={() => setdeposit("CURVE")} className="btn_primary earn-buttons" >Deposit</button>
+              </div>
+              <div className="info-text">
+                <p>Total Stacking: </p>
+              </div>
+              <div className="info-text">
+                <p>Unlock time: </p>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>

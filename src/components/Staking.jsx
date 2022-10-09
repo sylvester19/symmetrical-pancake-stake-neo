@@ -106,8 +106,8 @@ const Staking = () => {
       setLockTime(lockDayss)
       setMaxPool(maxpoolConverted)
       setMaxContribution(maxcontributionconverted)
-      console.log("maxpool" + maxpoolConverted)
-      console.log("current pools" + currrentpoolsizeConverted)
+      console.log("maxpool=>" + maxpoolConverted)
+      console.log("current pools=>" + currrentpoolsizeConverted)
 
 
     } catch (err) {
