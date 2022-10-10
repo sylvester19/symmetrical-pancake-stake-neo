@@ -13,7 +13,7 @@ import curveAbi from '../curveAbi.json'
 import usdcAbi from '../usdcAbi.json'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './Navbar.css';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Earn = () => {
@@ -127,6 +127,7 @@ const Earn = () => {
       let _claimableTokens = await staking.claimableRewards(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
       console.log("Claimable Tokens: ", _claimableTokens.toString());
       setClaimableTokens(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+      toast.success("Claimed Successfully..")
     } catch (error) {
       console.log("Claimable error", error);
     }
@@ -168,7 +169,7 @@ const Earn = () => {
       setTokenprice(totalvalue)
     } else {
       let symbol = deposit;
-      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${e}&symbol=${symbol}`;
+      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=${symbol}`;
       fetch(url, {
         method: "GET",
         withCredentials: true,
@@ -180,7 +181,9 @@ const Earn = () => {
       })
         .then(resp => resp.json())
         .then(function (data) {
-          setTokenprice(data.data[0].quote.USD.price)
+          let onetoken = data.data[0].quote.USD.price;
+          let total = e / onetoken;
+          setTokenprice(total)
         })
         .catch(function (error) {
           console.log(error);
@@ -218,6 +221,7 @@ const Earn = () => {
             await chotoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
+            toast.success("Staking Deposit successfully")
           } catch (err) {
             alert(err.message)
           }
@@ -226,32 +230,36 @@ const Earn = () => {
             const usdttoken = new ethers.Contract(value.usdttokenaddress, usdtAbi, signer)
             await usdttoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            alert(err.message)
+            toast.error(err.message)
           }
         } else if (deposit === "USDC") {
           try {
             let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             console.log("Error=>", err)
-            alert(err.message)
+            toast.error(err.message)
           }
         } else {
           try {
             const curvetoken = new ethers.Contract(value.curvetokenaddress, curveAbi, signer)
             await curvetoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            alert(err.message)
+            toast.error(err.message)
           }
         }
       } catch (err) {
-        alert(err.message)
+        toast.error(err.message)
       }
     } else {
+      toast.error("Something went wrong..")
       alert("The Minimum Deposited Amount is 200 USD");
     }
   }
@@ -262,6 +270,23 @@ const Earn = () => {
 
   return (
     <div className="App">
+      <Toaster
+        position="top-center"
+        duration="50000"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            border: '2px solid #19368F',
+            padding: '16px 20px',
+            color: '#000',
+            fontSize: '14px',
+          },
+          iconTheme: {
+            primary: '#19368F',
+            secondary: '#fff',
+          },
+        }}
+      />
       <section className="staking">
 
         <div className="container">
@@ -519,14 +544,14 @@ const Earn = () => {
             <div className='popcontent' style={{ background: 'white' }}>
               <button className='btn-close' onClick={() => setdeposit(false)}>x</button>
               <p>&nbsp;</p>
-              <h5><center>Enter Number of Token</center></h5>
+              <h5><center>Enter the amount to be deposited</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text"
-                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter ${deposit}`} className="form-control" /></center> </p>
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter USD`} className="form-control" /></center> </p>
               <p>&nbsp;</p>
-              <p><center><h5>Spending ${tokenprice.toFixed(2)} For <span className='token'>{deposittoken} {deposit}</span></h5> </center></p>
+              <p><center><h5>{tokenprice} CHO Tokens will be deposited.</h5> </center></p>
               <p>&nbsp;</p>
-              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit Token</button></center>
+              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit CHO</button></center>
             </div>
           </div>
         )}
