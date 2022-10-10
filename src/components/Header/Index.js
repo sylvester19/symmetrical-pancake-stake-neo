@@ -25,7 +25,7 @@ const Header = () => {
                         <li>
                             <Link to="/">
                                 <a
-                                    className={active === "-1" ? "actived" : ""}
+                                    className={active === "-1" ? "actived" : "menuItem"}
                                     href="/#"
                                     id={"-1"}
                                     onClick={handleClick}
@@ -37,7 +37,7 @@ const Header = () => {
                         <li>
                             <Link to="/earn">
                                 <a
-                                    className={active === "0" ? "actived" : ""}
+                                    className={active === "0" ? "actived" : "menuItem"}
                                     href="/#"
                                     id={"0"}
                                     onClick={handleClick}
@@ -48,7 +48,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a
-                                className={active === "1" ? "actived" : ""}
+                                className={active === "1" ? "actived" : "menuItem"}
                                 href="/#"
                                 id={"1"}
                                 onClick={handleClick}
@@ -58,7 +58,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a
-                                className={active === "2" ? "actived" : ""}
+                                className={active === "2" ? "actived" : "menuItem"}
                                 href="/#"
                                 id={"2"}
                                 onClick={handleClick}
@@ -69,7 +69,7 @@ const Header = () => {
                         <li>
                             <a href="/#"
                                 rel="noreferrer"
-                                className={active === "3" ? "actived" : ""}
+                                className={active === "3" ? "actived" : "menuItem"}
                                 id={"3"}
                                 onClick={handleClick}
                             >
@@ -78,7 +78,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a href="/#"
-                                className={active === "4" ? "actived" : ""}
+                                className={active === "4" ? "actived" : "menuItem"}
                                 id={"4"}
                                 onClick={handleClick}
                             >

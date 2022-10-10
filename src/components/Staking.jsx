@@ -7,6 +7,7 @@ import tokenAbi from '../tokenAbi.json'
 import stakingAbi from '../stakingAbi.json'
 import Progress from 'react-progressbar';
 import './Navbar.css';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Staking = () => {
@@ -195,6 +196,7 @@ const Staking = () => {
 
   async function stakeTokens() {
     // if(walletAddressInfo){
+      toast.success("Staking in progress")
     try {
       if (amount === undefined) {
         alert("Enter Amount First")
@@ -310,6 +312,24 @@ const Staking = () => {
   /* eslint-enable no-unused-vars */
 
   return (
+    <>
+    <Toaster
+    position="top-center"
+    duration="50000"
+    toastOptions={{
+      duration: 5000,
+      style: {
+        border: '2px solid #19368F',
+        padding: '16px 20px',
+        color: '#000',
+        fontSize: '14px',
+      },
+      iconTheme: {
+        primary: '#19368F',
+        secondary: '#fff',
+      },
+      }}
+      />
     <div className="App">
       <section className="staking">
         <div className="background">
@@ -419,7 +439,7 @@ const Staking = () => {
       </section>
 
     </div>
-
+    </>
   )
 }
 
