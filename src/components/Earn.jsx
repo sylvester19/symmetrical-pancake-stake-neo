@@ -13,7 +13,7 @@ import curveAbi from '../curveAbi.json'
 import usdcAbi from '../usdcAbi.json'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './Navbar.css';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const Earn = () => {
@@ -127,6 +127,7 @@ const Earn = () => {
       let _claimableTokens = await staking.claimableRewards(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
       console.log("Claimable Tokens: ", _claimableTokens.toString());
       setClaimableTokens(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+      toast.success("Claimed Successfully..")
     } catch (error) {
       console.log("Claimable error", error);
     }
@@ -218,6 +219,7 @@ const Earn = () => {
             await chotoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
+            toast.success("Staking Deposit successfully")
           } catch (err) {
             alert(err.message)
           }
@@ -226,32 +228,36 @@ const Earn = () => {
             const usdttoken = new ethers.Contract(value.usdttokenaddress, usdtAbi, signer)
             await usdttoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            alert(err.message)
+            toast.error(err.message)
           }
         } else if (deposit === "USDC") {
           try {
             let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             console.log("Error=>", err)
-            alert(err.message)
+            toast.error(err.message)
           }
         } else {
           try {
             const curvetoken = new ethers.Contract(value.curvetokenaddress, curveAbi, signer)
             await curvetoken.approve(myaddress, depositamount);
             let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
+            toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            alert(err.message)
+            toast.error(err.message)
           }
         }
       } catch (err) {
-        alert(err.message)
+        toast.error(err.message)
       }
     } else {
+      toast.error("Something went wrong..")
       alert("The Minimum Deposited Amount is 200 USD");
     }
   }
@@ -262,6 +268,23 @@ const Earn = () => {
 
   return (
     <div className="App">
+      <Toaster
+        position="top-center"
+        duration="50000"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            border: '2px solid #19368F',
+            padding: '16px 20px',
+            color: '#000',
+            fontSize: '14px',
+          },
+          iconTheme: {
+            primary: '#19368F',
+            secondary: '#fff',
+          },
+        }}
+      />
       <section className="staking">
 
         <div className="container">
