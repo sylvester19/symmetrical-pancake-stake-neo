@@ -27,7 +27,7 @@ const Earn = () => {
   const [usdtapr, setUsdtapr] = useState("")
   const [usdcapr, setusdcapr] = useState("")
   const [deposit, setdeposit] = useState(false)
-  const [tokenprice, setTokenprice] = useState(0)
+  const [tokenprice, setTokenprice] = useState("Loading.....")
   const [userlock, setUserlock] = useState(0)
   const [deposittoken, setdeposittokens] = useState(0)
   const [duration, setduration] = useState("")
@@ -127,7 +127,6 @@ const Earn = () => {
       let _claimableTokens = await staking.claimableRewards(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
       console.log("Claimable Tokens: ", _claimableTokens.toString());
       setClaimableTokens(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-      toast.success("Claimed Successfully..")
     } catch (error) {
       console.log("Claimable error", error);
     }
@@ -547,11 +546,11 @@ const Earn = () => {
               <h5><center>Enter the amount to be deposited</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text"
-                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter USD`} className="form-control" /></center> </p>
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter ${deposit}`} className="form-control" /></center> </p>
               <p>&nbsp;</p>
-              <p><center><h5>{tokenprice} CHO Tokens will be deposited.</h5> </center></p>
+              <p><center><h5>{tokenprice} {deposit} Tokens will be deposited.</h5> </center></p>
               <p>&nbsp;</p>
-              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit CHO</button></center>
+              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit {deposit}</button></center>
             </div>
           </div>
         )}
