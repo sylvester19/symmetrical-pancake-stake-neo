@@ -169,7 +169,7 @@ const Earn = () => {
       setTokenprice(totalvalue)
     } else {
       let symbol = deposit;
-      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=${e}&symbol=${symbol}`;
+      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=${symbol}`;
       fetch(url, {
         method: "GET",
         withCredentials: true,
@@ -181,7 +181,9 @@ const Earn = () => {
       })
         .then(resp => resp.json())
         .then(function (data) {
-          setTokenprice(data.data[0].quote.USD.price)
+          let onetoken = data.data[0].quote.USD.price;
+          let total = e / onetoken;
+          setTokenprice(total)
         })
         .catch(function (error) {
           console.log(error);
@@ -542,14 +544,14 @@ const Earn = () => {
             <div className='popcontent' style={{ background: 'white' }}>
               <button className='btn-close' onClick={() => setdeposit(false)}>x</button>
               <p>&nbsp;</p>
-              <h5><center>Enter Number of Token</center></h5>
+              <h5><center>Enter the amount to be deposited</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text"
-                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter ${deposit}`} className="form-control" /></center> </p>
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter USD`} className="form-control" /></center> </p>
               <p>&nbsp;</p>
-              <p><center><h5>Spending ${tokenprice.toFixed(2)} For <span className='token'>{deposittoken} {deposit}</span></h5> </center></p>
+              <p><center><h5>{tokenprice} CHO Tokens will be deposited.</h5> </center></p>
               <p>&nbsp;</p>
-              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit Token</button></center>
+              <center><button onClick={() => Deposit()} className="btn_primary earn-buttons" >Deposit CHO</button></center>
             </div>
           </div>
         )}
