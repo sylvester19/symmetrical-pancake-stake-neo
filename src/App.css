@@ -521,12 +521,17 @@ font-family: 'Poppins';
   .container {
     width: 100%;
     flex-direction: column;
+    padding: 0 10px;
 }
   .left {
     width: 90%;
     padding: 20px;
     min-height: 650px;
     
+  }
+  .earn-left {
+    width: 100%;
+    margin: 20px 0;
   }
 .btn_primary {
 
