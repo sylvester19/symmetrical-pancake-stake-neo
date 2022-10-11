@@ -14,7 +14,7 @@ import usdcAbi from '../usdcAbi.json'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './Navbar.css';
 import toast, { Toaster } from 'react-hot-toast';
-
+import BottomSection from './Bottom-section'
 
 const Earn = () => {
 
@@ -23,9 +23,9 @@ const Earn = () => {
   const { data: signer } = useSigner()
   const provider = useProvider();
   const [myaddress, setMyaddress] = useState()
-  const [choapr, setChoApr] = useState("")
-  const [usdtapr, setUsdtapr] = useState("")
-  const [usdcapr, setusdcapr] = useState("")
+  const [choapr, setChoApr] = useState(0)
+  const [usdtapr, setUsdtapr] = useState(0)
+  const [usdcapr, setusdcapr] = useState(0)
   const [deposit, setdeposit] = useState(false)
   const [tokenprice, setTokenprice] = useState("Loading.....")
   const [userlock, setUserlock] = useState(0)
@@ -33,8 +33,6 @@ const Earn = () => {
   const [duration, setduration] = useState("")
   const [open, setopen] = useState("")
   const [loading, setLoading] = useState("loading")
-
-
   const [poolInfo, setPoolInfo] = useState()
   const [userInfo, setUserInfo] = useState()
   const [walletAddressInfo, setWalletAddressInfo] = useState()
@@ -65,10 +63,9 @@ const Earn = () => {
     if (signer?._address) {
       setMyaddress(signer._address)
       setLoading(false);
-      getAPRInfo();
+      //getAPRInfo();
       getUserInfo();
-      getClaimableTokensone(); getClaimableTokenstwo(); getClaimableTokensthree();
-      getUserLockTime();
+
     } else {
       setLoading("nowallet")
     }
@@ -122,41 +119,41 @@ const Earn = () => {
     }
   }
 
-  async function getClaimableTokensone() {
-    try {
-      let userAddress = await signer.getAddress();
-      let poolId = 0;
-      let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-      console.log("Claimable Tokens zero: ", _claimableTokens.toString());
-      setClaimableTokensone(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-    } catch (error) {
-      console.log("Claimable error", error);
-    }
-  }
+  // async function getClaimableTokensone() {
+  //   try {
+  //     let userAddress = await signer.getAddress();
+  //     let poolId = 0;
+  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
+  //     console.log("Claimable Tokens zero: ", _claimableTokens.toString());
+  //     setClaimableTokensone(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+  //   } catch (error) {
+  //     console.log("Claimable error", error);
+  //   }
+  // }
 
-  async function getClaimableTokenstwo() {
-    try {
-      let poolId = 1;
-      let userAddress = await signer.getAddress();
-      let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-      console.log("Claimable Tokens one: ", _claimableTokens.toString());
-      setClaimableTokenstwo(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-    } catch (error) {
-      console.log("Claimable error", error);
-    }
-  }
+  // async function getClaimableTokenstwo() {
+  //   try {
+  //     let poolId = 1;
+  //     let userAddress = await signer.getAddress();
+  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
+  //     console.log("Claimable Tokens one: ", _claimableTokens.toString());
+  //     setClaimableTokenstwo(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+  //   } catch (error) {
+  //     console.log("Claimable error", error);
+  //   }
+  // }
 
-  async function getClaimableTokensthree() {
-    try {
-      let poolId = 2;
-      let userAddress = await signer.getAddress();
-      let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-      console.log("Claimable Tokens two: ", _claimableTokens.toString());
-      setClaimableTokensthree(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-    } catch (error) {
-      console.log("Claimable error", error);
-    }
-  }
+  // async function getClaimableTokensthree() {
+  //   try {
+  //     let poolId = 2;
+  //     let userAddress = await signer.getAddress();
+  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
+  //     console.log("Claimable Tokens two: ", _claimableTokens.toString());
+  //     setClaimableTokensthree(ethers.utils.formatUnits(_claimableTokens, 18).toString());
+  //   } catch (error) {
+  //     console.log("Claimable error", error);
+  //   }
+  // }
 
 
   async function claimtoken() {
@@ -174,28 +171,28 @@ const Earn = () => {
 
 
 
-  async function getUserLockTime() {
-    try {
-      let poolId = 1;
-      let userAddress = await signer.getAddress()
-      let myunlocktime = await staking.getUserLockTime(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
-      let _wallet = await signer.getAddress();
-      let _userInfo = await staking.userInfo(poolId, _wallet);
-      let _stakedAmount = ethers.utils.formatEther(_userInfo.amount.toString());
+  // async function getUserLockTime() {
+  //   try {
+  //     let poolId = 1;
+  //     let userAddress = await signer.getAddress()
+  //     let myunlocktime = await staking.getUserLockTime(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
+  //     let _wallet = await signer.getAddress();
+  //     let _userInfo = await staking.userInfo(poolId, _wallet);
+  //     let _stakedAmount = ethers.utils.formatEther(_userInfo.amount.toString());
 
-      if (_stakedAmount === 0) {
-        setUnlockTime("Not staked yet");
-        return;
-      }
-      let _timestamp = parseInt(myunlocktime.toString()) * 1000;
-      let _time = new Date(_timestamp);
-      console.log("Unlock Time: ", _time);
-      if (_timestamp > 0) setUnlockTime(_time.toString());
-      else setUnlockTime("Not staked yet");
-    } catch (err) {
-      console.log("User error", err);
-    }
-  }
+  //     if (_stakedAmount === 0) {
+  //       setUnlockTime("Not staked yet");
+  //       return;
+  //     }
+  //     let _timestamp = parseInt(myunlocktime.toString()) * 1000;
+  //     let _time = new Date(_timestamp);
+  //     console.log("Unlock Time: ", _time);
+  //     if (_timestamp > 0) setUnlockTime(_time.toString());
+  //     else setUnlockTime("Not staked yet");
+  //   } catch (err) {
+  //     console.log("User error", err);
+  //   }
+  // }
 
 
 
@@ -244,6 +241,7 @@ const Earn = () => {
 
   async function getAPRInfo() {
     let choaprinfo = await promocontract.aprs(value.chotokenaddress, period);
+    console.log("Info", choaprinfo)
     let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
     let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
     setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
@@ -392,9 +390,17 @@ const Earn = () => {
               <div className="info-text">
                 <a href="/#">More Info</a>
               </div>
-
+            </div>
+            <p>&nbsp;</p>
+            <div class="earn-border">
+              <hr></hr>
+            </div>
+            <div className='row' style={{ marginRight: '27px' }}>
+              <BottomSection poolid={0} signer={signer} />
             </div>
           </div>
+
+
 
           <div className="earn-left card earn">
             <div className="floating-card">
@@ -457,7 +463,16 @@ const Earn = () => {
                 <a href="/#" >More Info</a>
               </div>
             </div>
+            <p>&nbsp;</p>
+            <div class="earn-border">
+              <hr></hr>
+            </div>
+            <div className='row' style={{ marginRight: '27px' }}>
+              <BottomSection poolid={1} signer={signer} />
+            </div>
           </div>
+
+
 
           <div className="earn-left card earn">
             <div className="floating-card">
@@ -516,19 +531,25 @@ const Earn = () => {
                 <a href="/#">More Info</a>
               </div>
             </div>
-
+            <p>&nbsp;</p>
+            <div class="earn-border">
+              <hr></hr>
+            </div>
+            <div className='row' style={{ marginRight: '27px' }}>
+              <BottomSection poolid={2} signer={signer} />
+            </div>
           </div>
         </div>
 
 
-        <div className="container new">
+        {/* <div className="container new">
           <div className="earn-left card earn section-two">
             <div className="user-input">
               <div className="info-text">
                 <p>Total Staking: </p>
               </div>
               <div className="info-text">
-                <p>Lock time: </p>
+                <p>Un Lock time: </p>
               </div>
               <div className="info-text">
                 <p>Claimable Reward: {claimableTokensone}</p>
@@ -575,7 +596,7 @@ const Earn = () => {
               <button onClick={() => claimtoken()} className="btn_primary earn-buttons" >Claim Rewards</button>
             </div>
           </div>
-        </div>
+        </div> */}
 
 
         {loading === "nowallet" && (

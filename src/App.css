@@ -601,3 +601,9 @@ font-family: 'Poppins';
   }
 
 }
+
+.bottom-section{
+  border: 2px solid #f4f6fb;  
+  width: 100%;
+  margin-top: 10px;
+}
