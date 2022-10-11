@@ -75,7 +75,7 @@ function BottomSection(props) {
 
     return (
         <>
-            <div className="earn-left card earn section-two bottom-section">
+            <div className="earn-left card earn section-two bottom-section" style={{ boxShadow: 'none' }}>
                 <div className="user-input">
                     <div className="info-text">
                         <p>Total Staking: {balance}</p>
@@ -86,8 +86,9 @@ function BottomSection(props) {
                     <div className="info-text">
                         <p>Claimable Reward: {claimableTokensone}</p>
                     </div>
+                    <p>&nbsp;</p>
                     <div className="earn-btn">
-                        <button className="btn_primary earn-buttons">Claim Rewards</button>
+                        <button className="btn_primary nonactivebutton activebutton daysbtn">Claim Rewards</button>
                     </div>
                 </div>
             </div>

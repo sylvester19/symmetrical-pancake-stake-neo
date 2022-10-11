@@ -543,57 +543,15 @@ const Earn = () => {
 
         <div className="container new desktop-only">
           <div className="earn-left card earn section-two">
-            <div className="user-input">
-              <div className="info-text">
-                <p>Total Staking: </p>
-              </div>
-              <div className="info-text">
-                <p>Un Lock time: </p>
-              </div>
-              <div className="info-text">
-                <p>Claimable Reward: {claimableTokensone}</p>
-              </div>
-            </div>
-
-            <div className="earn-btn">
-              <button className="btn_primary earn-buttons" onClick={() => claimtoken()} >Claim Rewards</button>
-            </div>
+            <BottomSection poolid={0} signer={signer} />
           </div>
 
           <div className="earn-left card earn section-two">
-            <div className="user-input">
-              <div className="info-text">
-                <p>Total Staking: </p>
-              </div>
-              <div className="info-text">
-                <p>Lock time: </p>
-              </div>
-              <div className="info-text">
-                <p>Claimable Reward: {claimableTokenstwo}</p>
-              </div>
-            </div>
-
-            <div className="earn-btn">
-              <button className="btn_primary earn-buttons" onClick={() => claimtoken()} >Claim Rewards</button>
-            </div>
+            <BottomSection poolid={1} signer={signer} />
           </div>
 
           <div className="earn-left card earn section-two">
-            <div className="user-input">
-              <div className="info-text">
-                <p>Total Staking: </p>
-              </div>
-              <div className="info-text">
-                <p>Lock time: </p>
-              </div>
-              <div className="info-text">
-                <p>Claimable Reward: {claimableTokensthree}</p>
-              </div>
-            </div>
-
-            <div className="earn-btn">
-              <button onClick={() => claimtoken()} className="btn_primary earn-buttons" >Claim Rewards</button>
-            </div>
+            <BottomSection poolid={2} signer={signer} />
           </div>
         </div>
 
