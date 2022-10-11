@@ -280,7 +280,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("CHO")} className="btn_primary nonactivebutton activebutton daysbtn" >Deposit</button>
+                <button onClick={() => setdeposit("CHO")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
@@ -347,7 +347,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setopen(true)} className="btn_primary nonactivebutton activebutton daysbtn" >Deposit</button>
+                <button onClick={() => setopen(true)} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#" >More Info</a>
@@ -410,7 +410,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("CURVE")} className="btn_primary nonactivebutton activebutton daysbtn" >Deposit</button>
+                <button onClick={() => setdeposit("CURVE")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="/#">More Info</a>
@@ -442,13 +442,10 @@ const Earn = () => {
         {loading === "nowallet" && (
           <div className='popup'>
             <div className='popcontent' style={{ background: 'white' }}>
-              <h5><center>Please Connect your wallet to continue</center></h5>
-              <p>&nbsp;</p>
+              <h5><center>Please Connect your wallet to continue</center></h5>            
               <div className="row wallet-popbutton">
                 <center> <ConnectButton className="contact-btn" sx={{ color: '#000000' }} /></center>
               </div>
-
-              <p>&nbsp;</p>
             </div>
           </div>
         )}
