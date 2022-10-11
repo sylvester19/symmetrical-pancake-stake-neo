@@ -395,9 +395,9 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            <div className='row' style={{ marginRight: '27px' }}>
+            {/* <div className='row' style={{ marginRight: '27px' }}>
               <BottomSection poolid={0} signer={signer} />
-            </div>
+            </div> */}
           </div>
 
 
@@ -467,9 +467,9 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            <div className='row' style={{ marginRight: '27px' }}>
+            {/* <div className='row' style={{ marginRight: '27px' }}>
               <BottomSection poolid={1} signer={signer} />
-            </div>
+            </div> */}
           </div>
 
 
@@ -535,9 +535,9 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            <div className='row' style={{ marginRight: '27px' }}>
+            {/* <div className='row' style={{ marginRight: '27px' }}>
               <BottomSection poolid={2} signer={signer} />
-            </div>
+            </div> */}
           </div>
         </div>
 
