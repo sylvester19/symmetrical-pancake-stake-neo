@@ -81,7 +81,7 @@ function BottomSection(props) {
                         <p>Total Staking: {balance}</p>
                     </div>
                     <div className="info-text">
-                        <p>Un Lock time: <br />{unlocktime}</p>
+                        <p>Unlock time: {unlocktime}</p>
                     </div>
                     <div className="info-text">
                         <p>Claimable Reward: {claimableTokensone}</p>

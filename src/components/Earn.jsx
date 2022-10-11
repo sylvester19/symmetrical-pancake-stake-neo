@@ -391,10 +391,6 @@ const Earn = () => {
                 <a href="/#">More Info</a>
               </div>
             </div>
-            <p>&nbsp;</p>
-            <div class="earn-border">
-              <hr></hr>
-            </div>
           </div>
 
           <div className='row mobile-only' style={{ width: '100%' }}>
@@ -462,10 +458,6 @@ const Earn = () => {
                 <a href="/#" >More Info</a>
               </div>
             </div>
-            <p>&nbsp;</p>
-            <div class="earn-border">
-              <hr></hr>
-            </div>
           </div>
 
           <div className='row mobile-only' style={{ width: '100%' }}>
@@ -528,10 +520,6 @@ const Earn = () => {
               <div className="info-text">
                 <a href="/#">More Info</a>
               </div>
-            </div>
-            <p>&nbsp;</p>
-            <div class="earn-border">
-              <hr></hr>
             </div>
           </div>
           <div className='row mobile-only' style={{ width: '100%' }}>
