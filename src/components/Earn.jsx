@@ -34,165 +34,59 @@ const Earn = () => {
   const [open, setopen] = useState("")
   const [loading, setLoading] = useState("loading")
   const [poolInfo, setPoolInfo] = useState()
-  const [userInfo, setUserInfo] = useState()
-  const [walletAddressInfo, setWalletAddressInfo] = useState()
-  const [mystakebalance, setMystakeBalance] = useState(0)
-  const [amount, setAmount] = useState()
   const [locktime, setLockTime] = useState(1)
-  const [unlockTime, setUnlockTime] = useState(1);
   const [emergencyfee, setEmergencyfee] = useState()
   const [poolsize, setPoolSize] = useState()
   const [maxpool, setMaxPool] = useState(0)
-  const [reward, setReward] = useState()
-  const [myTokenBalance, setMyTokenBalance] = useState(0)
-  const [istokenapproved, settokenapproved] = useState(false)
-  const [buttonactive1, setButtonactive1] = useState("activebutton")
-  const [buttonactive2, setButtonactive2] = useState("")
-  const [buttonactive3, setButtonactive3] = useState("")
-  const [buttonactive4, setButtonactive4] = useState("")
-  const [maxtoken, setMaxToken] = useState(0)
   const [maxContribution, setMaxContribution] = useState(0)
   const [minContribution, setMinContribution] = useState(0)
-  const [claimableTokensthree, setClaimableTokensthree] = useState(0)
-  const [claimableTokensone, setClaimableTokensone] = useState(0)
-  const [claimableTokenstwo, setClaimableTokenstwo] = useState(0)
-  const [errors, setError] = useState()
+
 
 
   useEffect(() => {
     if (signer?._address) {
       setMyaddress(signer._address)
       setLoading(false);
-      //getAPRInfo();
-      getUserInfo();
-
+      getAPRInfo();
+      getPoolInfo();
     } else {
       setLoading("nowallet")
     }
   }, [signer]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
-  // async function getPoolInfo() {
-  //   try {
-  //     let rpcUrl = value.rpcURl;
-  //     let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
-  //     let stake_temp = new ethers.Contract(value.stakingAddress, stakingAbi, provider_);
-  //     var _poolInfo = await stake_temp.poolInfo(poolId);
-  //     console.log("Pool Info: ", _poolInfo);
-  //     console.log("Emergency Fees: ", _poolInfo.emergencyFees.toString());
-  //     const emergencywithdrawfee = await _poolInfo.emergencyFees.toString()
-  //     const currrentpoolsize = await _poolInfo.currentPoolSize.toString()
-  //     const maxcontribution = await _poolInfo.maxContribution.toString()
-  //     const maxcontributionconverted = ethers.utils.formatEther(maxcontribution)
-  //     const minicontribution = await _poolInfo.minContribution.toString()
-  //     const minicontributionconverted = ethers.utils.formatEther(minicontribution)
-  //     const currrentpoolsizeConverted = Math.floor(ethers.utils.formatEther(currrentpoolsize))
-  //     const maxpool = await _poolInfo.maxPoolSize.toString()
-  //     const maxpoolConverted = ethers.utils.formatEther(maxpool)
-  //     const lockDayss = await _poolInfo.lockDays.toString();
-  //     setPoolInfo(_poolInfo);
-  //     setMinContribution(minicontributionconverted)
-  //     setEmergencyfee(emergencywithdrawfee);
-  //     setPoolSize(currrentpoolsizeConverted);
-  //     setLockTime(lockDayss)
-  //     setMaxPool(maxpoolConverted)
-  //     setMaxContribution(maxcontributionconverted)
-  //     console.log("maxpool=>" + maxpoolConverted)
-  //     console.log("current pools=>" + currrentpoolsizeConverted)
-
-  //     getUserInfo(); getClaimableTokens(); getUserLockTime();
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-
-  // }
-
-  async function getUserInfo() {
+  async function getPoolInfo() {
     try {
-      let poolId = 1;
-      let userAddress = await signer.getAddress();
-      let _userInfo = await staking.userInfo(poolId, userAddress);
-      console.log("my stake token amount: ", ethers.utils.formatEther(_userInfo.amount.toString()));
-      setMystakeBalance(ethers.utils.formatEther(_userInfo.amount.toString()));
+      let rpcUrl = value.rpcURl;
+      let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
+      let stake_temp = new ethers.Contract(value.stakingAddress, stakingAbi, provider_);
+      var _poolInfo = await stake_temp.poolInfo(1);
+      console.log("Pool Info: ", _poolInfo);
+      console.log("Emergency Fees: ", _poolInfo.emergencyFees.toString());
+      const emergencywithdrawfee = await _poolInfo.emergencyFees.toString()
+      const currrentpoolsize = await _poolInfo.currentPoolSize.toString()
+      const maxcontribution = await _poolInfo.maxContribution.toString()
+      const maxcontributionconverted = ethers.utils.formatEther(maxcontribution)
+      const minicontribution = await _poolInfo.minContribution.toString()
+      const minicontributionconverted = ethers.utils.formatEther(minicontribution)
+      const currrentpoolsizeConverted = Math.floor(ethers.utils.formatEther(currrentpoolsize))
+      const maxpool = await _poolInfo.maxPoolSize.toString()
+      const maxpoolConverted = ethers.utils.formatEther(maxpool)
+      const lockDayss = await _poolInfo.lockDays.toString();
+      setPoolInfo(_poolInfo);
+      setMinContribution(minicontributionconverted)
+      setEmergencyfee(emergencywithdrawfee);
+      setPoolSize(currrentpoolsizeConverted);
+      setLockTime(lockDayss)
+      setMaxPool(maxpoolConverted)
+      setMaxContribution(maxcontributionconverted)
+      console.log("maxpool=>" + maxpoolConverted)
+      console.log("current pools=>" + currrentpoolsizeConverted)
     } catch (err) {
-      console.log("User error", err);
-    }
-  }
-
-  // async function getClaimableTokensone() {
-  //   try {
-  //     let userAddress = await signer.getAddress();
-  //     let poolId = 0;
-  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-  //     console.log("Claimable Tokens zero: ", _claimableTokens.toString());
-  //     setClaimableTokensone(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-  //   } catch (error) {
-  //     console.log("Claimable error", error);
-  //   }
-  // }
-
-  // async function getClaimableTokenstwo() {
-  //   try {
-  //     let poolId = 1;
-  //     let userAddress = await signer.getAddress();
-  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-  //     console.log("Claimable Tokens one: ", _claimableTokens.toString());
-  //     setClaimableTokenstwo(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-  //   } catch (error) {
-  //     console.log("Claimable error", error);
-  //   }
-  // }
-
-  // async function getClaimableTokensthree() {
-  //   try {
-  //     let poolId = 2;
-  //     let userAddress = await signer.getAddress();
-  //     let _claimableTokens = await staking.claimableRewards(poolId, userAddress);
-  //     console.log("Claimable Tokens two: ", _claimableTokens.toString());
-  //     setClaimableTokensthree(ethers.utils.formatUnits(_claimableTokens, 18).toString());
-  //   } catch (error) {
-  //     console.log("Claimable error", error);
-  //   }
-  // }
-
-
-  async function claimtoken() {
-    try {
-      let poolId = 1;
-      let tx = await staking.claimRewards(poolId);
-      let reciept = await tx.wait();
-      console.log("ClaimToken: ", reciept);
-    }
-    catch (error) {
-      console.log(error.message)
+      console.log(err.message);
     }
 
   }
-
-
-
-  // async function getUserLockTime() {
-  //   try {
-  //     let poolId = 1;
-  //     let userAddress = await signer.getAddress()
-  //     let myunlocktime = await staking.getUserLockTime(poolId, "0xd5aBcdC9Bf6045684a487Bf49b0112CaCcF1852A");
-  //     let _wallet = await signer.getAddress();
-  //     let _userInfo = await staking.userInfo(poolId, _wallet);
-  //     let _stakedAmount = ethers.utils.formatEther(_userInfo.amount.toString());
-
-  //     if (_stakedAmount === 0) {
-  //       setUnlockTime("Not staked yet");
-  //       return;
-  //     }
-  //     let _timestamp = parseInt(myunlocktime.toString()) * 1000;
-  //     let _time = new Date(_timestamp);
-  //     console.log("Unlock Time: ", _time);
-  //     if (_timestamp > 0) setUnlockTime(_time.toString());
-  //     else setUnlockTime("Not staked yet");
-  //   } catch (err) {
-  //     console.log("User error", err);
-  //   }
-  // }
 
 
 
@@ -237,14 +131,17 @@ const Earn = () => {
     signer,
   )
   const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer);
-  const period = 24; const deployperiod = duration;
+  const deployperiod = duration;
 
   async function getAPRInfo() {
-    let choaprinfo = await promocontract.aprs(value.chotokenaddress, period);
+    console.log("In")
+    const periods = 6;
+    let choaprinfo = await promocontract.aprs(value.chotokenaddress, periods);
     console.log("Info", choaprinfo)
-    let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
-    let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
-    setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
+
+    //let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
+    // let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
+    // setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
 
   }
 
@@ -263,7 +160,7 @@ const Earn = () => {
             console.log("Deposit Function=>", depositfunction)
             toast.success("Staking Deposit successfully")
           } catch (err) {
-            alert(err.message)
+            console.log(err.message)
           }
         } else if (deposit === "USDT") {
           try {
@@ -273,7 +170,7 @@ const Earn = () => {
             toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            toast.error(err.message)
+            console.log(err.message)
           }
         } else if (deposit === "USDC") {
           try {
@@ -282,7 +179,6 @@ const Earn = () => {
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
             console.log("Error=>", err)
-            toast.error(err.message)
           }
         } else {
           try {
@@ -292,15 +188,14 @@ const Earn = () => {
             toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
-            toast.error(err.message)
+            console.log(err.message)
           }
         }
       } catch (err) {
-        toast.error(err.message)
+        console.log(err.message)
       }
     } else {
-      toast.error("Something went wrong..")
-      alert("The Minimum Deposited Amount is 200 USD");
+      toast.error("The Minimum Deposited Amount is 200 USD");
     }
   }
 

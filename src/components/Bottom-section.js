@@ -9,6 +9,7 @@ function BottomSection(props) {
     const [claimableTokensone, setClaimableTokens] = useState(0);
     const [unlocktime, setUnlockTime] = useState(0);
     const [balance, setMystakeBalance] = useState(0);
+    const pooid = props.poolid
 
     useEffect(() => {
         getClaimableTokensone(props)
@@ -73,6 +74,23 @@ function BottomSection(props) {
     }
 
 
+
+
+    async function claimtoken(pooid) {
+        try {
+            let tx = await staking.claimRewards(pooid);
+            let reciept = await tx.wait();
+            console.log("ClaimToken: ", reciept);
+        }
+        catch (error) {
+            console.log(error.message)
+        }
+
+    }
+
+
+
+
     return (
         <>
             <div className="earn-left card earn section-two bottom-section" style={{ boxShadow: 'none' }}>
@@ -88,7 +106,7 @@ function BottomSection(props) {
                     </div>
                     <p>&nbsp;</p>
                     <div className="earn-btn">
-                        <button className="btn_primary nonactivebutton activebutton daysbtn">Claim Rewards</button>
+                        <button onClick={() => claimtoken(pooid)} className="btn_primary nonactivebutton activebutton daysbtn">Claim Rewards</button>
                     </div>
                 </div>
             </div>
