@@ -127,15 +127,16 @@ li {
     font-family: 'Poppins';
         font-style: normal;
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 1.5rem !important;
         line-height: 32px;
         padding: .6rem 1.5rem;
         text-transform: capitalize;
-background: linear-gradient(90deg, #49A5D3 0.15%, #7CF0B2 100.15%) !important;
-    border-radius: 10px;
+        background: linear-gradient(90deg, #49A5D3 0.15%, #7CF0B2 100.15%) !important;
+        border-radius: 10px;
         color: #FFFFFF;
-    cursor: pointer;
-    display: block;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto !important;
 }
 
 

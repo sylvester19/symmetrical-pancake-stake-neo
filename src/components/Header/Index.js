@@ -11,6 +11,7 @@ const Header = () => {
 
     const handleClick = (event) => {
         setActive(event.target.id);
+        setOpen(false);
     };
 
 
