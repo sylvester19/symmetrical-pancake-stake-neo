@@ -487,6 +487,13 @@ const Earn = () => {
               <div className="info-text">
                 <p>Lock time: </p>
               </div>
+              <div className="info-text">
+                <p>Claimable Reward: </p>
+              </div>
+            </div>
+
+            <div className="earn-btn">
+              <button className="btn_primary earn-buttons" >Claim Rewards</button>
             </div>
           </div>
 
@@ -498,6 +505,13 @@ const Earn = () => {
               <div className="info-text">
                 <p>Lock time: </p>
               </div>
+              <div className="info-text">
+                <p>Claimable Reward: </p>
+              </div>
+            </div>
+
+            <div className="earn-btn">
+              <button className="btn_primary earn-buttons" >Claim Rewards</button>
             </div>
           </div>
 
@@ -509,6 +523,13 @@ const Earn = () => {
               <div className="info-text">
                 <p>Lock time: </p>
               </div>
+              <div className="info-text">
+                <p>Claimable Reward: </p>
+              </div>
+            </div>
+
+            <div className="earn-btn">
+              <button className="btn_primary earn-buttons" >Claim Rewards</button>
             </div>
           </div>
         </div>
