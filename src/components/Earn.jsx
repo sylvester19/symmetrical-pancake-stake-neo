@@ -395,12 +395,11 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            {/* <div className='row' style={{ marginRight: '27px' }}>
-              <BottomSection poolid={0} signer={signer} />
-            </div> */}
           </div>
 
-
+          <div className='row mobile-only' style={{ width: '100%' }}>
+            <BottomSection poolid={0} signer={signer} />
+          </div>
 
           <div className="earn-left card earn">
             <div className="floating-card">
@@ -467,12 +466,11 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            {/* <div className='row' style={{ marginRight: '27px' }}>
-              <BottomSection poolid={1} signer={signer} />
-            </div> */}
           </div>
 
-
+          <div className='row mobile-only' style={{ width: '100%' }}>
+            <BottomSection poolid={1} signer={signer} />
+          </div>
 
           <div className="earn-left card earn">
             <div className="floating-card">
@@ -535,14 +533,15 @@ const Earn = () => {
             <div class="earn-border">
               <hr></hr>
             </div>
-            {/* <div className='row' style={{ marginRight: '27px' }}>
-              <BottomSection poolid={2} signer={signer} />
-            </div> */}
+          </div>
+          <div className='row mobile-only' style={{ width: '100%' }}>
+            <BottomSection poolid={2} signer={signer} />
           </div>
         </div>
 
 
-        {/* <div className="container new">
+
+        <div className="container new desktop-only">
           <div className="earn-left card earn section-two">
             <div className="user-input">
               <div className="info-text">
@@ -596,7 +595,7 @@ const Earn = () => {
               <button onClick={() => claimtoken()} className="btn_primary earn-buttons" >Claim Rewards</button>
             </div>
           </div>
-        </div> */}
+        </div>
 
 
         {loading === "nowallet" && (

@@ -607,3 +607,16 @@ font-family: 'Poppins';
   width: 100%;
   margin-top: 10px;
 }
+
+.mobile-only{
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile-only{
+    display:block;
+  } 
+  .desktop-only{
+    display: none;
+  }
+}
