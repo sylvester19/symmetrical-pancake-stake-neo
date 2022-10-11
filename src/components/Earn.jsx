@@ -134,14 +134,20 @@ const Earn = () => {
   const deployperiod = duration;
 
   async function getAPRInfo() {
-    console.log("In")
-    const periods = 6;
-    let choaprinfo = await promocontract.aprs(value.chotokenaddress, periods);
-    console.log("Info", choaprinfo)
+    try {
+      console.log("In")
+      const periods = 24;
+      let choaprinfo = await promocontract.aprs(value.chotokenaddress, periods);
+      await choaprinfo.wait()
+      console.log("Info", choaprinfo)
+      let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, periods);
+      let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, periods);
+      setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
+    } catch (choaprinfo) {
+      setChoApr(0); setUsdtapr(0); setusdcapr(0)
+      console.log(choaprinfo.reason)
+    }
 
-    //let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, period);
-    // let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, period);
-    // setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
 
   }
 
@@ -442,7 +448,7 @@ const Earn = () => {
         {loading === "nowallet" && (
           <div className='popup'>
             <div className='popcontent' style={{ background: 'white' }}>
-              <h5><center>Please Connect your wallet to continue</center></h5>            
+              <h5><center>Please Connect your wallet to continue</center></h5>
               <div className="row wallet-popbutton">
                 <center> <ConnectButton className="contact-btn" sx={{ color: '#000000' }} /></center>
               </div>
