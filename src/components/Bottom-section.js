@@ -121,7 +121,7 @@ function BottomSection(props) {
                     </div>
                     <p>&nbsp;</p>
                     <div className="earn-btn">
-                        <button onClick={() => claimtoken(pooid)} className="btn_primary nonactivebutton daysbtn">Claim Rewards</button>
+                        <button onClick={() => claimtoken(pooid)} className="btn_primary earnBtn nonactivebutton daysbtn">Claim Rewards</button>
                     </div>
                 </div>
             </div>

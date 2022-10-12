@@ -62,7 +62,7 @@
   background-color: #1e4fff84;
 }
 
-.btn_primary:hover {
+.earnBtn:hover {
   background: linear-gradient(90.41deg, #4FA7F3 0.31%, #7CF0B2 99.66%);
 }
 
@@ -636,6 +636,7 @@ font-family: 'Poppins';
   border-radius: 6px;
   position: absolute;
   z-index: 1;
+  font-size:12px;
 }
 
 .tooltip:hover .tooltiptext {
