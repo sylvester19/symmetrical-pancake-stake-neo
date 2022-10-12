@@ -96,10 +96,12 @@ const Earn = () => {
   }
 
   const setdeposittoken = (e) => {
+    setLoading("loading");
     setdeposittokens(e);
     if (deposit === "CURVE") {
       let totalvalue = e * 0.957
       setTokenprice(totalvalue)
+      setLoading(false);
     } else {
       let symbol = deposit;
       const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=${symbol}`;
@@ -117,8 +119,10 @@ const Earn = () => {
           let onetoken = data.data[0].quote.USD.price;
           let total = e / onetoken;
           setTokenprice(total)
+          setLoading(false);
         })
         .catch(function (error) {
+          setLoading(false);
           console.log(error);
         });
     }
@@ -135,11 +139,9 @@ const Earn = () => {
 
   async function getAPRInfo() {
     try {
-      console.log("In")
       const periods = 24;
       let choaprinfo = await promocontract.aprs(value.chotokenaddress, periods);
       await choaprinfo.wait()
-      console.log("Info", choaprinfo)
       let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, periods);
       let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, periods);
       setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
