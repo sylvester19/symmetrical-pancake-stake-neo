@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ethers } from 'ethers';
 import stakingAbi from '../stakingAbi.json'
 import value from '.././value.json'
-
+import toast, { Toaster } from 'react-hot-toast';
 
 function BottomSection(props) {
 
@@ -23,7 +23,6 @@ function BottomSection(props) {
         stakingAbi,
         props.signer,
     )
-
 
     async function getClaimableTokensone(props) {
         try {
@@ -78,6 +77,7 @@ function BottomSection(props) {
 
     async function claimtoken(pooid) {
         try {
+            toast.success("Please Wait until the transaction is being success..")
             let tx = await staking.claimRewards(pooid);
             let reciept = await tx.wait();
             console.log("ClaimToken: ", reciept);
@@ -89,10 +89,25 @@ function BottomSection(props) {
     }
 
 
-
-
     return (
         <>
+            <Toaster
+                position="top-center"
+                duration="50000"
+                toastOptions={{
+                    duration: 5000,
+                    style: {
+                        border: '2px solid #19368F',
+                        padding: '16px 20px',
+                        color: '#000',
+                        fontSize: '14px',
+                    },
+                    iconTheme: {
+                        primary: '#19368F',
+                        secondary: '#fff',
+                    },
+                }}
+            />
             <div className="earn-left card earn section-two bottom-section" style={{ boxShadow: 'none' }}>
                 <div className="user-input">
                     <div className="info-text">

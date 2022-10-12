@@ -3,18 +3,18 @@ import "../App.css"
 import { useSigner, useProvider } from 'wagmi'
 import { ethers } from 'ethers';
 import value from '.././value.json'
-import tokenAbi from '../tokenAbi.json'
 import stakingAbi from '../stakingAbi.json'
 import ClipLoader from "react-spinners/ClipLoader";
 import promodeposit from '../promoDeposit.json'
 import choAbi from '../choAbi.json'
 import usdtAbi from '../usdtAbi.json'
 import curveAbi from '../curveAbi.json'
-import usdcAbi from '../usdcAbi.json'
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import './Navbar.css';
 import toast, { Toaster } from 'react-hot-toast';
 import BottomSection from './Bottom-section'
+import ICONCOIN from '../components/images/icon-coin.png'
+import CURVE from '../components/images/ibeur.jpeg'
 
 const Earn = () => {
 
@@ -28,7 +28,7 @@ const Earn = () => {
   const [usdcapr, setusdcapr] = useState(0)
   const [deposit, setdeposit] = useState(false)
   const [tokenprice, setTokenprice] = useState("Loading.....")
-  const [userlock, setUserlock] = useState(0)
+  const [lockedtokens, setLockedtokens] = useState(0)
   const [deposittoken, setdeposittokens] = useState(0)
   const [duration, setduration] = useState("")
   const [open, setopen] = useState("")
@@ -49,6 +49,7 @@ const Earn = () => {
       setLoading(false);
       getAPRInfo();
       getPoolInfo();
+      Lockedtokens();
     } else {
       setLoading("nowallet")
     }
@@ -60,7 +61,7 @@ const Earn = () => {
       let rpcUrl = value.rpcURl;
       let provider_ = new ethers.providers.JsonRpcProvider(rpcUrl);
       let stake_temp = new ethers.Contract(value.stakingAddress, stakingAbi, provider_);
-      var _poolInfo = await stake_temp.poolInfo(1);
+      var _poolInfo = await stake_temp.poolInfo(3);
       console.log("Pool Info: ", _poolInfo);
       console.log("Emergency Fees: ", _poolInfo.emergencyFees.toString());
       const emergencywithdrawfee = await _poolInfo.emergencyFees.toString()
@@ -88,7 +89,18 @@ const Earn = () => {
 
   }
 
-
+  async function Lockedtokens(props) {
+    try {
+      let poolId = 3;
+      let userAddress = await props.signer.getAddress();
+      let _userInfo = await staking.userInfo(poolId, userAddress);
+      console.log("my stake token amount: ", ethers.utils.formatEther(_userInfo.amount.toString()));
+      setLockedtokens(ethers.utils.formatEther(_userInfo.amount.toString())
+      );
+    } catch (err) {
+      console.log("User error", err);
+    }
+  }
 
   const setdeposits = (e) => {
     setdeposit(e)
@@ -104,12 +116,12 @@ const Earn = () => {
       setLoading(false);
     } else {
       let symbol = deposit;
-      const url = 'https://cors-digi.herokuapp.com/' + `https://pro-api.coinmarketcap.com/v2/tools/price-conversion?amount=1&symbol=${symbol}`;
+      const url = `${process.env.REACT_APP_CORUS_URL}` + `${process.env.REACT_APP_COINMARKET_ENDPOINT}?amount=1&symbol=${symbol}`;
       fetch(url, {
         method: "GET",
         withCredentials: true,
         headers: {
-          "X-CMC_PRO_API_KEY": "79da1075-a7f3-495e-8285-774af970f7bc",
+          "X-CMC_PRO_API_KEY": process.env.REACT_APP_COINMARKETCAP_API,
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest"
         }
@@ -235,7 +247,10 @@ const Earn = () => {
         <div className="container">
           <div className="earn-left card earn">
             <div className="floating-card">
-              <h1>Promo</h1>
+              <div class="tooltip">  <h1>Promo</h1>
+                <span class="tooltiptext">Limited Offer! This is promo activity by neo</span>
+              </div>
+
             </div>
             <div className="heading-earn">
               <div className="row earnBoxHead">
@@ -291,7 +306,7 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CHO")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
-                <a href="/#">More Info</a>
+                <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
               </div>
             </div>
           </div>
@@ -302,12 +317,16 @@ const Earn = () => {
 
           <div className="earn-left card earn">
             <div className="floating-card">
-              <h1>Promo</h1>
+              <div class="tooltip">  <h1>Promo</h1>
+                <span class="tooltiptext">Limited Offer! This is promo activity by neo</span>
+              </div>
             </div>
             <div className="heading-earn">
               <div className="row earnBoxHead">
                 <div>
-                  <div class="placeholder"></div>
+                  <div>
+                    <img src={ICONCOIN} alt="" className="icon-coin" />
+                  </div>
                 </div>
                 <div>
                   <h2>USDT / USDC</h2>
@@ -358,7 +377,7 @@ const Earn = () => {
                 <button onClick={() => setopen(true)} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
-                <a href="/#" >More Info</a>
+                <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
               </div>
             </div>
           </div>
@@ -369,12 +388,16 @@ const Earn = () => {
 
           <div className="earn-left card earn">
             <div className="floating-card">
-              <h1>Promo</h1>
+              <div class="tooltip">  <h1>Risky</h1>
+                <span class="tooltiptext">This is highest APY Pool over the last 7 Days with TVL more than 1 min and the volume more than 100,000$</span>
+              </div>
             </div>
             <div className="heading-earn">
               <div className="row earnBoxHead">
                 <div>
-                  <div class="placeholder"></div>
+                  <div class="placeholder">
+                    <img src={CURVE} alt="" className="curveicon" />
+                  </div>
                 </div>
                 <div>
                   <h2>Curve IbEUR</h2>
@@ -389,7 +412,7 @@ const Earn = () => {
                 <h2>TVL</h2>
               </div>
               <div class="right-earn-division">
-                <h2>$2 859</h2>
+                <h2>${lockedtokens}</h2>
               </div>
             </div>
             <div class="earn-border">
@@ -421,7 +444,7 @@ const Earn = () => {
                 <button onClick={() => setdeposit("CURVE")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
-                <a href="/#">More Info</a>
+                <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
               </div>
             </div>
           </div>

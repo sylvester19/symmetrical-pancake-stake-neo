@@ -36,6 +36,12 @@ function App() {
     testnet: false,
   };
 
+  if (process.env.REACT_APP_STATUS === 'production') {
+    console.log = () => { }
+    console.error = () => { }
+    console.debug = () => { }
+  }
+
 
   const { chains, provider } = configureChains(
     [BSCchain, chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
