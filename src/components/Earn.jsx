@@ -499,7 +499,7 @@ const Earn = () => {
               <h5><center>Enter the amount to be deposited</center></h5>
               <p>&nbsp;</p>
               <p><center><input type="text"
-                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter ${deposit}`} className="form-control" /></center> </p>
+                onChange={(e) => setdeposittoken(e.target.value)} placeholder={`Enter USD`} className="form-control" /></center> </p>
               <p>&nbsp;</p>
               <p><center><h5>{tokenprice} {deposit} Tokens will be deposited.</h5> </center></p>
               <p>&nbsp;</p>
