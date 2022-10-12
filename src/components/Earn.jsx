@@ -169,6 +169,7 @@ const Earn = () => {
 
 
   async function Deposit() {
+    setLoading("loading");
     if (tokenprice >= 200) {
       let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
       try {
@@ -179,6 +180,7 @@ const Earn = () => {
             let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
             console.log("Deposit Function=>", depositfunction)
             toast.success("Staking Deposit successfully")
+            setLoading(false);
           } catch (err) {
             console.log(err.message)
           }
@@ -189,15 +191,19 @@ const Earn = () => {
             let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
             toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
+            setLoading(false);
           } catch (err) {
+            setLoading(false);
             console.log(err.message)
           }
         } else if (deposit === "USDC") {
           try {
             let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
             toast.success("Staking Deposit successfully")
+            setLoading(false);
             console.log("Deposit Function=>", depositfunction)
           } catch (err) {
+            setLoading(false);
             console.log("Error=>", err)
           }
         } else {
@@ -207,14 +213,18 @@ const Earn = () => {
             let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
             toast.success("Staking Deposit successfully")
             console.log("Deposit Function=>", depositfunction)
+            setLoading(false);
           } catch (err) {
             console.log(err.message)
+            setLoading(false);
           }
         }
       } catch (err) {
+        setLoading(false);
         console.log(err.message)
       }
     } else {
+      setLoading(false);
       toast.error("The Minimum Deposited Amount is 200 USD");
     }
   }
