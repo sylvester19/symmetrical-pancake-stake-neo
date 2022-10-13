@@ -15,6 +15,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import BottomSection from './Bottom-section'
 import ICONCOIN from '../components/images/icon-coin.png'
 import CURVE from '../components/images/ibeur.jpeg'
+import CHO from '../components/images/cho.png'
 
 const Earn = () => {
 
@@ -265,7 +266,7 @@ const Earn = () => {
             <div className="heading-earn">
               <div className="row earnBoxHead">
                 <div>
-                  <div class="placeholder"></div>
+                  <img src={CHO} alt="" className="cho-icon" />
                 </div>
                 <div>
                   <h2>CHO</h2>
