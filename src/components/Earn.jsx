@@ -24,8 +24,8 @@ const Earn = () => {
   const { data: signer } = useSigner()
   const provider = useProvider();
   const [myaddress, setMyaddress] = useState()
-  const [choapr, setChoApr] = useState(0)
-  const [usdtapr, setUsdtapr] = useState(0)
+  const [choapr, setChoApr] = useState(13)
+  const [usdtapr, setUsdtapr] = useState(13)
   const [usdcapr, setusdcapr] = useState(0)
   const [deposit, setdeposit] = useState(false)
   const [tokenprice, setTokenprice] = useState("Loading.....")
@@ -48,7 +48,7 @@ const Earn = () => {
     if (signer?._address) {
       setMyaddress(signer._address)
       setLoading(false);
-      getAPRInfo();
+      // getAPRInfo();
       getPoolInfo();
       Lockedtokens();
     } else {
@@ -151,27 +151,30 @@ const Earn = () => {
   const promocontract = new ethers.Contract(value.promoDeposit, promodeposit, signer);
   const deployperiod = duration;
 
-  async function getAPRInfo() {
-    try {
-      const periods = 24;
-      let choaprinfo = await promocontract.aprs(value.chotokenaddress, periods);
-      await choaprinfo.wait()
-      let usdtaprinfo = await promocontract.aprs(value.usdttokenaddress, periods);
-      let curveaprinfo = await promocontract.aprs(value.curvetokenaddress, periods);
-      setChoApr(choaprinfo.toString()); setUsdtapr(usdtaprinfo.toString()); setusdcapr(curveaprinfo.toString())
-    } catch (choaprinfo) {
-      setChoApr(0); setUsdtapr(0); setusdcapr(0)
-      console.log(choaprinfo.reason)
+
+  function ChoData(e) {
+    if (e === "6") {
+      setChoApr(13)
+    } else if (e === "12") {
+      setChoApr(25)
+    } else if (e === "24") {
+      setChoApr(26)
     }
+  }
 
-
+  function usdapr(e) {
+    if (e === "6") {
+      setUsdtapr(13)
+    } else if (e === "12") {
+      setUsdtapr(15)
+    } else if (e === "24") {
+      setUsdtapr(16)
+    }
   }
 
 
-
-
   async function Deposit() {
-    try{
+    try {
       if (tokenprice >= 200) {
         let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
         try {
@@ -223,20 +226,20 @@ const Earn = () => {
           }
         } catch (err) {
           setdeposit(false)
-      setLoading(false);
-      toast.error("Transaction Rejected by User");
+          setLoading(false);
+          toast.error("Transaction Rejected by User");
         }
       } else {
         setLoading(false);
         toast.error("The Minimum Deposited Amount is 200 USD");
       }
-    }catch (err) { 
+    } catch (err) {
       setdeposit(false)
       setLoading(false);
       toast.error("Transaction Rejected by User");
-     
+
     }
-    
+
   }
 
 
@@ -302,10 +305,10 @@ const Earn = () => {
               </div>
               <div class="right-earn-division">
                 <select className='datepicker' value={duration}
-                  onChange={(e) => setduration(e.target.value)}>
-                  <option>6 Month</option>
-                  <option>12 Month</option>
-                  <option>24 Month</option>
+                  onChange={(e) => { setduration(e.target.value); ChoData(e.target.value) }}>
+                  <option value="6">6 Month</option>
+                  <option value="12">12 Month</option>
+                  <option value="24">24 Month</option>
                 </select>
               </div>
             </div>
@@ -373,7 +376,7 @@ const Earn = () => {
               </div>
               <div class="right-earn-division">
                 <select className='datepicker' value={duration}
-                  onChange={(e) => setduration(e.target.value)}>
+                  onChange={(e) => { setduration(e.target.value); usdapr(e.target.value) }}>
                   <option value="6">6 Month</option>
                   <option value="12">12 Month</option>
                   <option value="24">24 Month</option>
