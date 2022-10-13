@@ -109,9 +109,9 @@ const Earn = () => {
   }
 
   const setdeposittoken = (e) => {
-    setLoading("loading");
     setdeposittokens(e);
     if (deposit === "CURVE") {
+      setLoading("loading");
       let totalvalue = e * 0.957
       setTokenprice(totalvalue)
       setLoading(false);
@@ -139,6 +139,7 @@ const Earn = () => {
           console.log(error);
         });
     }
+    setLoading(false);
   }
 
 
@@ -170,64 +171,72 @@ const Earn = () => {
 
 
   async function Deposit() {
-    setLoading("loading");
-    if (tokenprice >= 200) {
-      let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
-      try {
-        if (deposit === "CHO") {
-          try {
-            const chotoken = new ethers.Contract(value.chotokenaddress, choAbi, signer)
-            await chotoken.approve(myaddress, depositamount);
-            let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
-            console.log("Deposit Function=>", depositfunction)
-            toast.success("Staking Deposit successfully")
-            setLoading(false);
-          } catch (err) {
-            console.log(err.message)
+    try{
+      if (tokenprice >= 200) {
+        let depositamount = ethers.utils.parseUnits(tokenprice.toString(), 'ether');
+        try {
+          if (deposit === "CHO") {
+            try {
+              const chotoken = new ethers.Contract(value.chotokenaddress, choAbi, signer)
+              await chotoken.approve(myaddress, depositamount);
+              let depositfunction = await promocontract.deposit(value.chotokenaddress, depositamount, deployperiod);
+              console.log("Deposit Function=>", depositfunction)
+              toast.success("Staking Deposit successfully")
+              setLoading(false);
+            } catch (err) {
+              console.log(err.message)
+            }
+          } else if (deposit === "USDT") {
+            try {
+              const usdttoken = new ethers.Contract(value.usdttokenaddress, usdtAbi, signer)
+              await usdttoken.approve(myaddress, depositamount);
+              let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
+              toast.success("Staking Deposit successfully")
+              console.log("Deposit Function=>", depositfunction)
+              setLoading(false);
+            } catch (err) {
+              setLoading(false);
+              console.log(err.message)
+            }
+          } else if (deposit === "USDC") {
+            try {
+              let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
+              toast.success("Staking Deposit successfully")
+              setLoading(false);
+              console.log("Deposit Function=>", depositfunction)
+            } catch (err) {
+              setLoading(false);
+              console.log("Error=>", err)
+            }
+          } else {
+            try {
+              const curvetoken = new ethers.Contract(value.curvetokenaddress, curveAbi, signer)
+              await curvetoken.approve(myaddress, depositamount);
+              let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
+              toast.success("Staking Deposit successfully")
+              console.log("Deposit Function=>", depositfunction)
+              setLoading(false);
+            } catch (err) {
+              console.log(err.message)
+              setLoading(false);
+            }
           }
-        } else if (deposit === "USDT") {
-          try {
-            const usdttoken = new ethers.Contract(value.usdttokenaddress, usdtAbi, signer)
-            await usdttoken.approve(myaddress, depositamount);
-            let depositfunction = await promocontract.deposit(value.usdttokenaddress, depositamount, deployperiod);
-            toast.success("Staking Deposit successfully")
-            console.log("Deposit Function=>", depositfunction)
-            setLoading(false);
-          } catch (err) {
-            setLoading(false);
-            console.log(err.message)
-          }
-        } else if (deposit === "USDC") {
-          try {
-            let depositfunction = await promocontract.deposit(value.usdctokenaddress, depositamount, deployperiod);
-            toast.success("Staking Deposit successfully")
-            setLoading(false);
-            console.log("Deposit Function=>", depositfunction)
-          } catch (err) {
-            setLoading(false);
-            console.log("Error=>", err)
-          }
-        } else {
-          try {
-            const curvetoken = new ethers.Contract(value.curvetokenaddress, curveAbi, signer)
-            await curvetoken.approve(myaddress, depositamount);
-            let depositfunction = await promocontract.deposit(value.curvetokenaddress, depositamount, deployperiod);
-            toast.success("Staking Deposit successfully")
-            console.log("Deposit Function=>", depositfunction)
-            setLoading(false);
-          } catch (err) {
-            console.log(err.message)
-            setLoading(false);
-          }
-        }
-      } catch (err) {
-        setLoading(false);
-        console.log(err.message)
-      }
-    } else {
+        } catch (err) {
+          setdeposit(false)
       setLoading(false);
-      toast.error("The Minimum Deposited Amount is 200 USD");
+      toast.error("Transaction Rejected by User");
+        }
+      } else {
+        setLoading(false);
+        toast.error("The Minimum Deposited Amount is 200 USD");
+      }
+    }catch (err) { 
+      setdeposit(false)
+      setLoading(false);
+      toast.error("Transaction Rejected by User");
+     
     }
+    
   }
 
 
@@ -494,7 +503,7 @@ const Earn = () => {
 
         {loading === "loading" && (
           <div className='popup loading'>
-            <div className='popcontent'>
+            <div className='popcontent loading'>
               <p>&nbsp;</p>
               <p><center><ClipLoader color="#3C226C" size={40} /></center> </p>
               <p>&nbsp;</p>
