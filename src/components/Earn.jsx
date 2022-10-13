@@ -314,7 +314,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("CHO")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
+                <button onClick={() => setdeposit("CHO")} className="btn_primary earnBtn nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
@@ -385,7 +385,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setopen(true)} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
+                <button onClick={() => setopen(true)} className="btn_primary earnBtn nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
@@ -452,7 +452,7 @@ const Earn = () => {
 
             <div className="user-input">
               <div className="earn-btn">
-                <button onClick={() => setdeposit("CURVE")} className="btn_primary nonactivebutton daysbtn" >Deposit</button>
+                <button onClick={() => setdeposit("CURVE")} className="btn_primary earnBtn nonactivebutton daysbtn" >Deposit</button>
               </div>
               <div className="info-text">
                 <a href="https://noe-global.com/token/" rel="noreferrer" target="_blank">More Info</a>
